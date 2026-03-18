@@ -282,21 +282,66 @@
                     <div class="grid grid-cols-2 gap-3 mb-5">
 
                         <div class="rounded-xl p-4" style="background:#1c1c1c; border:1px solid #242424;">
-                            <p class="text-xs mb-1" style="color:#555;">Skor {{ results.mode }} Berdasarkan Nilai Rata
-                                Rata Top 5 {{ results.mode }} Termirip</p>
-                            <p class="text-2xl font-semibold font-mono" style="color:#ff2d55;">{{
-                                results.novelty.novelty_avg }}</p>
+                            <p class="text-xs mb-3" style="color:#555;">Skor {{ results.mode }} Berdasarkan Nilai Rata
+                                Rata Top 5 {{ results.mode }} Tertinggi</p>
+                            <div class="flex items-end justify-between gap-2">
+                                <p class="text-2xl font-semibold font-mono" style="color:#ff2d55;">{{
+                                    results.novelty.novelty_avg }}</p>
+                                {% if results.novelty.label_avg == "Sangat Baru" %}
+                                <span class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
+                                    style="background:#0a2e1a; border:1px solid #1a5c35; color:#2ecc71;">
+                                    {{ results.novelty.label_avg }}
+                                </span>
+                                {% elif results.novelty.label_avg == "Cukup Baru" %}
+                                <span class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
+                                    style="background:#1a2e0a; border:1px solid #3a5c1a; color:#85c53a;">
+                                    {{ results.novelty.label_avg }}
+                                </span>
+                                {% elif results.novelty.label_avg == "Kurang Baru" %}
+                                <span class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
+                                    style="background:#2e2000; border:1px solid #5c4200; color:#ffb020;">
+                                    {{ results.novelty.label_avg }}
+                                </span>
+                                {% else %}
+                                <span class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
+                                    style="background:#3d0a14; border:1px solid #7a1428; color:#ff6b8a;">
+                                    {{ results.novelty.label_avg }}
+                                </span>
+                                {% endif %}
+                            </div>
                         </div>
 
                         <div class="rounded-xl p-4" style="background:#1c1c1c; border:1px solid #242424;">
-                            <p class="text-xs mb-1" style="color:#555;">Skor {{ results.mode }} Berdasarkan Nilai {{
+                            <p class="text-xs mb-3" style="color:#555;">Skor {{ results.mode }} Berdasarkan Nilai {{
                                 results.mode }} Tertinggi</p>
-                            <p class="text-2xl font-semibold font-mono" style="color:#ff2d55;">{{
-                                results.novelty.novelty_max }}</p>
+                            <div class="flex items-end justify-between gap-2">
+                                <p class="text-2xl font-semibold font-mono" style="color:#ff2d55;">{{
+                                    results.novelty.novelty_max }}</p>
+                                {% if results.novelty.label_max == "Sangat Baru" %}
+                                <span class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
+                                    style="background:#0a2e1a; border:1px solid #1a5c35; color:#2ecc71;">
+                                    {{ results.novelty.label_max }}
+                                </span>
+                                {% elif results.novelty.label_max == "Cukup Baru" %}
+                                <span class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
+                                    style="background:#1a2e0a; border:1px solid #3a5c1a; color:#85c53a;">
+                                    {{ results.novelty.label_max }}
+                                </span>
+                                {% elif results.novelty.label_max == "Kurang Baru" %}
+                                <span class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
+                                    style="background:#2e2000; border:1px solid #5c4200; color:#ffb020;">
+                                    {{ results.novelty.label_max }}
+                                </span>
+                                {% else %}
+                                <span class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
+                                    style="background:#3d0a14; border:1px solid #7a1428; color:#ff6b8a;">
+                                    {{ results.novelty.label_max }}
+                                </span>
+                                {% endif %}
+                            </div>
                         </div>
 
                     </div>
-
                     <!-- RESULTS TABLE -->
                     <div>
                         <p class="text-xs font-medium mb-3 uppercase tracking-widest" style="color:#666;">
