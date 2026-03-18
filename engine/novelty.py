@@ -5,17 +5,31 @@ import numpy as np
 # Hitung Novelty Score
 # ======================================
 
-def calculate_novelty(top_scores):
+import numpy as np
 
-    """
-    top_scores : similarity dari Top-K
-    contoh: [0.82, 0.79, 0.75, 0.71, 0.68]
-    """
+def calculate_novelty(top_scores, min_sim=0.6, max_sim=1.0):
 
     top_scores = np.array(top_scores)
 
-    avg_similarity = np.mean(top_scores)
-    max_similarity = np.max(top_scores)
+    # ==============================
+    # Min-Max Scaling
+    # ==============================
+
+    scaled_scores = (top_scores - min_sim) / (max_sim - min_sim)
+
+    # Clamp agar tidak keluar dari 0–1
+    scaled_scores = np.clip(scaled_scores, 0, 1)
+
+    # ==============================
+    # Hitung Similarity (scaled)
+    # ==============================
+
+    avg_similarity = np.mean(scaled_scores)
+    max_similarity = np.max(scaled_scores)
+
+    # ==============================
+    # Hitung Novelty
+    # ==============================
 
     novelty_avg = 1 - avg_similarity
     novelty_max = 1 - max_similarity

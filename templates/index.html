@@ -279,28 +279,18 @@
                     </div>
 
                     <!-- NOVELTY STAT CARDS -->
-                    <div class="grid grid-cols-4 gap-3 mb-5">
+                    <div class="grid grid-cols-2 gap-3 mb-5">
 
                         <div class="rounded-xl p-4" style="background:#1c1c1c; border:1px solid #242424;">
-                            <p class="text-xs mb-1" style="color:#555;">Nilai Rata-rata Kemiripan</p>
-                            <p class="text-2xl font-semibold font-mono" style="color:#e0e0e0;">{{
-                                results.novelty.avg_similarity }}</p>
-                        </div>
-
-                        <div class="rounded-xl p-4" style="background:#1c1c1c; border:1px solid #242424;">
-                            <p class="text-xs mb-1" style="color:#555;">Nilai Kemiripan Tertinggi</p>
-                            <p class="text-2xl font-semibold font-mono" style="color:#e0e0e0;">{{
-                                results.novelty.max_similarity }}</p>
-                        </div>
-
-                        <div class="rounded-xl p-4" style="background:#1c1c1c; border:1px solid #242424;">
-                            <p class="text-xs mb-1" style="color:#555;">Kebaruan Berdasarkan Rata Rata Kemiripan</p>
+                            <p class="text-xs mb-1" style="color:#555;">Skor {{ results.mode }} Berdasarkan Nilai Rata
+                                Rata Top 5 {{ results.mode }} Termirip</p>
                             <p class="text-2xl font-semibold font-mono" style="color:#ff2d55;">{{
                                 results.novelty.novelty_avg }}</p>
                         </div>
 
                         <div class="rounded-xl p-4" style="background:#1c1c1c; border:1px solid #242424;">
-                            <p class="text-xs mb-1" style="color:#555;">Kebaruan Berdasarkan Kemiripan Tertinggi</p>
+                            <p class="text-xs mb-1" style="color:#555;">Skor {{ results.mode }} Berdasarkan Nilai {{
+                                results.mode }} Tertinggi</p>
                             <p class="text-2xl font-semibold font-mono" style="color:#ff2d55;">{{
                                 results.novelty.novelty_max }}</p>
                         </div>
@@ -314,7 +304,6 @@
                             {% elif results.mode == "deskripsi" %}Top 5 Berdasarkan Deskripsi
                             {% else %}Top 5 Judul + Deskripsi{% endif %}
                         </p>
-
                         <div class="rounded-xl overflow-hidden" style="border:1px solid #242424;">
                             <table class="w-full text-sm">
                                 <thead>
@@ -325,20 +314,55 @@
                                             style="color:#555;">Judul Tugas Akhir</th>
                                         <th class="text-right px-4 py-3 text-xs font-medium uppercase tracking-widest whitespace-nowrap"
                                             style="color:#555;">Skor</th>
+                                        <th class="text-center px-4 py-3 text-xs font-medium uppercase tracking-widest whitespace-nowrap"
+                                            style="color:#555;">Label</th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
                                     {% for r in results.results %}
                                     <tr class="border-t"
                                         style="border-color:#1e1e1e; {% if loop.index == 1 %}background:#1a0a0f;{% else %}background:#141414;{% endif %}">
-                                        <td class="px-4 py-3 font-mono text-xs" style="color:#555;">{{ loop.index }}
+
+                                        <!-- Nomor -->
+                                        <td class="px-4 py-3 font-mono text-xs" style="color:#555;">
+                                            {{ loop.index }}
                                         </td>
+
+                                        <!-- Teks -->
                                         <td class="px-4 py-3 text-xs leading-relaxed break-words"
-                                            style="color:#ccc; word-break:break-word;">{{ r.text }}</td>
+                                            style="color:#ccc; word-break:break-word;">
+                                            {{ r.text }}
+                                        </td>
+
+                                        <!-- Skor -->
                                         <td class="px-4 py-3 text-right font-mono text-xs font-medium whitespace-nowrap"
                                             style="color:{% if loop.index == 1 %}#ff2d55{% else %}#888{% endif %};">
                                             {{ r.score }}
                                         </td>
+                                        <!-- Label -->
+                                        <td class="px-4 py-3 text-center">
+                                            {% if r.label == "Sangat Mirip" %}
+                                            <span
+                                                class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
+                                                style="background:#3d0a14; border:1px solid #7a1428; color:#ff6b8a;">
+                                                {{ r.label }}
+                                            </span>
+                                            {% elif r.label == "Mirip" %}
+                                            <span
+                                                class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
+                                                style="background:#2e2000; border:1px solid #5c4200; color:#ffb020;">
+                                                {{ r.label }}
+                                            </span>
+                                            {% else %}
+                                            <span
+                                                class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
+                                                style="background:#0a2e1a; border:1px solid #1a5c35; color:#2ecc71;">
+                                                {{ r.label }}
+                                            </span>
+                                            {% endif %}
+                                        </td>
+
                                     </tr>
                                     {% endfor %}
                                 </tbody>

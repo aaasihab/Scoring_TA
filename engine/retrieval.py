@@ -63,6 +63,10 @@ def search_similar(judul, deskripsi, mode):
 
     for idx, score in zip(top_idx, top_scores):
 
+        # ==============================
+        # Ambil teks sesuai mode
+        # ==============================
+
         if mode == "judul":
             text_result = dataset.iloc[idx]["judul_preprocessed"]
 
@@ -70,13 +74,32 @@ def search_similar(judul, deskripsi, mode):
             text_result = dataset.iloc[idx]["deskripsi_preprocessed"]
 
         else:
-            text_result = dataset.iloc[idx]["judul_preprocessed"] + " " + dataset.iloc[idx]["deskripsi_preprocessed"]
+            text_result = (
+                dataset.iloc[idx]["judul_preprocessed"] + " " +
+                dataset.iloc[idx]["deskripsi_preprocessed"]
+            )
+
+        # ==============================
+        # Klasifikasi Skala
+        # ==============================
+
+        score = round(float(score), 2)
+        if score >= 0.8:
+            label = "Sangat Mirip"
+        elif score >= 0.6:
+            label = "Mirip"
+        else:
+            label = "Tidak Mirip"
+
+        # ==============================
+        # Simpan hasil
+        # ==============================
 
         results.append({
             "text": text_result,
-            "score": round(float(score), 2)
+            "score": score,
+            "label": label
         })
-
     novelty = calculate_novelty(top_scores)
 
     return {
