@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sistem Penilaian Judul Tugas Akhir</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'base': '#0a0a0a',
+                        'surface': '#141414',
+                        'card': '#1c1c1c',
+                        'border': '#2a2a2a',
+                        'muted': '#3a3a3a',
+                        'accent': '#ff2d55',
+                        'accent2': '#ff6b6b',
+                        'text-dim': '#888888',
+                    },
+                    fontFamily: {
+                        sans: ['"DM Sans"', 'sans-serif'],
+                        mono: ['"DM Mono"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            background-color: #0a0a0a;
+        }
+
+        /* Subtle scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #141414;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3a3a3a;
+            border-radius: 2px;
+        }
+
+        /* Radio custom */
+        input[type="radio"] {
+            accent-color: #ff2d55;
+        }
+
+        /* Textarea resize */
+        textarea {
+            resize: none;
+        }
+
+        /* Smooth transitions */
+        * {
+            transition-property: background-color, border-color, opacity, box-shadow;
+            transition-duration: 150ms;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen font-sans text-gray-100" style="background-color:#0a0a0a;">
+
+    <div class="max-w-6xl mx-auto px-4 py-10">
+
+        <!-- ====== PAGE TITLE ====== -->
+        <div class="mb-8 flex items-center gap-3">
+            <div class="w-2 h-8 rounded-full" style="background:linear-gradient(180deg,#ff2d55,#ff6b6b);"></div>
+            <div>
+                <h1 class="text-xl font-semibold tracking-tight text-white">Sistem Penilaian Judul Tugas Akhir
+                </h1>
+                <p class="text-xs mt-0.5" style="color:#666;">Pengecekan kemiripan berbasis semantik</p>
+            </div>
+        </div>
+
+        <!-- ====== MAIN GRID ====== -->
+        <div class="flex flex-col gap-5">
+
+            <!-- =============================== -->
+            <!-- LEFT PANEL — FORM INPUT         -->
+            <!-- =============================== -->
+            <div class="rounded-2xl border flex flex-col" style="background:#141414; border-color:#242424;">
+
+                <!-- Card Header -->
+                <div class="flex items-center justify-between px-5 py-4 border-b" style="border-color:#242424;">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg flex items-center justify-center"
+                            style="background:#1e1e1e; border:1px solid #2e2e2e;">
+                            <!-- Search Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="#888" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-white leading-none">Cek Kemiripan</p>
+                            <p class="text-xs mt-0.5" style="color:#666;">Masukkan judul atau deskripsi penelitian</p>
+                        </div>
+                    </div>
+                    <span class="text-xs px-2.5 py-1 rounded-full font-medium"
+                        style="background:#1e1e1e; border:1px solid #2e2e2e; color:#888;">
+                        Pencarian Semantik
+                    </span>
+                </div>
+
+                <!-- Card Body -->
+                <form method="POST" class="flex flex-col flex-1 p-5 gap-5">
+
+                    <!-- MODE SELECTION -->
+                    <div>
+                        <p class="text-xs font-medium mb-3 uppercase tracking-widest" style="color:#666;">Mode
+                            Pengecekan</p>
+                        <div class="grid grid-cols-3 gap-2">
+
+                            <label class="mode-option">
+                                <input type="radio" name="mode" value="judul" checked class="hidden peer">
+                                <div class="peer-checked:border-accent peer-checked:bg-[#1e0810] flex flex-col items-center gap-1.5 rounded-xl border py-3 px-2 cursor-pointer text-center"
+                                    style="border-color:#2a2a2a; background:#1c1c1c;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="peer-checked:text-accent" style="color:#555;">
+                                        <path d="M4 6h16M4 12h8M4 18h4" />
+                                    </svg>
+                                    <span class="text-xs font-medium" style="color:#bbb;">Judul</span>
+                                </div>
+                            </label>
+
+                            <label class="mode-option">
+                                <input type="radio" name="mode" value="deskripsi" class="hidden peer">
+                                <div class="peer-checked:border-accent peer-checked:bg-[#1e0810] flex flex-col items-center gap-1.5 rounded-xl border py-3 px-2 cursor-pointer text-center"
+                                    style="border-color:#2a2a2a; background:#1c1c1c;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" style="color:#555;">
+                                        <path d="M4 6h16M4 10h16M4 14h16M4 18h12" />
+                                    </svg>
+                                    <span class="text-xs font-medium" style="color:#bbb;">Deskripsi</span>
+                                </div>
+                            </label>
+
+                            <label class="mode-option">
+                                <input type="radio" name="mode" value="kombinasi" class="hidden peer">
+                                <div class="peer-checked:border-accent peer-checked:bg-[#1e0810] flex flex-col items-center gap-1.5 rounded-xl border py-3 px-2 cursor-pointer text-center"
+                                    style="border-color:#2a2a2a; background:#1c1c1c;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" style="color:#555;">
+                                        <rect x="3" y="3" width="7" height="7" />
+                                        <rect x="14" y="3" width="7" height="7" />
+                                        <rect x="14" y="14" width="7" height="7" />
+                                        <rect x="3" y="14" width="7" height="7" />
+                                    </svg>
+                                    <span class="text-xs font-medium" style="color:#bbb;">Kombinasi</span>
+                                </div>
+                            </label>
+
+                        </div>
+                    </div>
+
+                    <div class="w-full h-px" style="background:#242424;"></div>
+
+                    <!-- JUDUL INPUT -->
+                    <div>
+                        <label class="block text-xs font-medium mb-2 uppercase tracking-widest"
+                            style="color:#666;">Judul Tugas Akhir</label>
+                        <input type="text" name="judul" placeholder="Masukkan judul Tugas Akhir…"
+                            class="w-full rounded-xl px-4 py-3 text-sm outline-none placeholder:text-gray-600 focus:border-accent"
+                            style="background:#1c1c1c; border:1px solid #2a2a2a; color:#e0e0e0;">
+                    </div>
+
+                    <!-- DESKRIPSI INPUT -->
+                    <div class="flex-1 flex flex-col">
+                        <label class="block text-xs font-medium mb-2 uppercase tracking-widest"
+                            style="color:#666;">Deskripsi Penelitian</label>
+                        <textarea name="deskripsi" rows="4" placeholder="Masukkan deskripsi penelitian…"
+                            class="flex-1 w-full rounded-xl px-4 py-3 text-sm outline-none placeholder:text-gray-600 focus:border-accent"
+                            style="background:#1c1c1c; border:1px solid #2a2a2a; color:#e0e0e0;"></textarea>
+                    </div>
+
+                    <!-- SUBMIT + RESET BUTTONS -->
+                    <div class="flex items-center gap-3 pt-1 flex-wrap">
+                        <button type="submit"
+                            class="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white"
+                            style="background:linear-gradient(135deg,#ff2d55,#ff5a5a); box-shadow:0 4px 20px rgba(255,45,85,0.35);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
+                            </svg>
+                            Cek Kemiripan
+                        </button>
+                        <button type="button" id="resetBtn"
+                            class="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold"
+                            style="background:#1c1c1c; border:1px solid #2a2a2a; color:#888;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                                <path d="M3 3v5h5" />
+                            </svg>
+                            Atur Ulang
+                        </button>
+                    </div>
+
+                </form>
+            </div><!-- end LEFT PANEL -->
+
+
+            <!-- =============================== -->
+            <!-- RIGHT PANEL — RESULTS           -->
+            <!-- =============================== -->
+            <div class="rounded-2xl border flex flex-col" style="background:#141414; border-color:#242424;">
+
+                <!-- Card Header -->
+                <div class="flex items-center justify-between px-5 py-4 border-b" style="border-color:#242424;">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg flex items-center justify-center"
+                            style="background:#1e1e1e; border:1px solid #2e2e2e;">
+                            <!-- Chart icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="#888" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <line x1="18" y1="20" x2="18" y2="10" />
+                                <line x1="12" y1="20" x2="12" y2="4" />
+                                <line x1="6" y1="20" x2="6" y2="14" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-white leading-none">Hasil</p>
+                            <p class="text-xs mt-0.5" style="color:#666;">Skor kemiripan dan kebaruan penelitian</p>
+                        </div>
+                    </div>
+                    <span class="text-xs px-2.5 py-1 rounded-full font-medium"
+                        style="background:#1e1e1e; border:1px solid #2e2e2e; color:#888;">
+                        Keluaran
+                    </span>
+                </div>
+
+                <!-- Card Body -->
+                <div class="flex-1 p-5">
+
+                    {% if error %}
+                    <!-- ERROR STATE -->
+                    <div class="rounded-xl px-4 py-3 text-sm flex items-center gap-3"
+                        style="background:#1e0810; border:1px solid #5a0020; color:#ff6b8a;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
+                        </svg>
+                        {{ error }}
+                    </div>
+                    {% endif %}
+
+                    {% if results %}
+
+                    <!-- META BADGES -->
+                    <div class="flex items-center gap-2 mb-5 flex-wrap">
+                        <span class="text-xs px-2.5 py-1 rounded-full font-mono"
+                            style="background:#1e1e1e; border:1px solid #2e2e2e; color:#888;">
+                            mode: <span style="color:#ff2d55;">{{ results.mode }}</span>
+                        </span>
+                        <span class="text-xs px-2.5 py-1 rounded-lg font-mono break-all"
+                            style="background:#1e1e1e; border:1px solid #2e2e2e; color:#888;">
+                            "{{ results.query }}"
+                        </span>
+                    </div>
+
+                    <!-- NOVELTY STAT CARDS -->
+                    <div class="grid grid-cols-4 gap-3 mb-5">
+
+                        <div class="rounded-xl p-4" style="background:#1c1c1c; border:1px solid #242424;">
+                            <p class="text-xs mb-1" style="color:#555;">Nilai Rata-rata Kemiripan</p>
+                            <p class="text-2xl font-semibold font-mono" style="color:#e0e0e0;">{{
+                                results.novelty.avg_similarity }}</p>
+                        </div>
+
+                        <div class="rounded-xl p-4" style="background:#1c1c1c; border:1px solid #242424;">
+                            <p class="text-xs mb-1" style="color:#555;">Nilai Kemiripan Tertinggi</p>
+                            <p class="text-2xl font-semibold font-mono" style="color:#e0e0e0;">{{
+                                results.novelty.max_similarity }}</p>
+                        </div>
+
+                        <div class="rounded-xl p-4" style="background:#1c1c1c; border:1px solid #242424;">
+                            <p class="text-xs mb-1" style="color:#555;">Kebaruan Berdasarkan Rata Rata Kemiripan</p>
+                            <p class="text-2xl font-semibold font-mono" style="color:#ff2d55;">{{
+                                results.novelty.novelty_avg }}</p>
+                        </div>
+
+                        <div class="rounded-xl p-4" style="background:#1c1c1c; border:1px solid #242424;">
+                            <p class="text-xs mb-1" style="color:#555;">Kebaruan Berdasarkan Kemiripan Tertinggi</p>
+                            <p class="text-2xl font-semibold font-mono" style="color:#ff2d55;">{{
+                                results.novelty.novelty_max }}</p>
+                        </div>
+
+                    </div>
+
+                    <!-- RESULTS TABLE -->
+                    <div>
+                        <p class="text-xs font-medium mb-3 uppercase tracking-widest" style="color:#666;">
+                            {% if results.mode == "judul" %}Top 5 Judul Paling Mirip
+                            {% elif results.mode == "deskripsi" %}Top 5 Berdasarkan Deskripsi
+                            {% else %}Top 5 Judul + Deskripsi{% endif %}
+                        </p>
+
+                        <div class="rounded-xl overflow-hidden" style="border:1px solid #242424;">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr style="background:#1c1c1c; border-bottom:1px solid #2a2a2a;">
+                                        <th class="text-left px-4 py-3 text-xs font-medium uppercase tracking-widest w-8"
+                                            style="color:#555;">#</th>
+                                        <th class="text-left px-4 py-3 text-xs font-medium uppercase tracking-widest"
+                                            style="color:#555;">Judul Tugas Akhir</th>
+                                        <th class="text-right px-4 py-3 text-xs font-medium uppercase tracking-widest whitespace-nowrap"
+                                            style="color:#555;">Skor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for r in results.results %}
+                                    <tr class="border-t"
+                                        style="border-color:#1e1e1e; {% if loop.index == 1 %}background:#1a0a0f;{% else %}background:#141414;{% endif %}">
+                                        <td class="px-4 py-3 font-mono text-xs" style="color:#555;">{{ loop.index }}
+                                        </td>
+                                        <td class="px-4 py-3 text-xs leading-relaxed break-words"
+                                            style="color:#ccc; word-break:break-word;">{{ r.text }}</td>
+                                        <td class="px-4 py-3 text-right font-mono text-xs font-medium whitespace-nowrap"
+                                            style="color:{% if loop.index == 1 %}#ff2d55{% else %}#888{% endif %};">
+                                            {{ r.score }}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {% else %}
+
+                    <!-- EMPTY STATE -->
+                    <div class="flex flex-col items-center justify-center h-full py-20 gap-4" style="color:#333;">
+                        <div class="w-14 h-14 rounded-2xl flex items-center justify-center"
+                            style="background:#1a1a1a; border:1px solid #242424;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="#333" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
+                            </svg>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-sm font-medium" style="color:#444;">Belum ada hasil</p>
+                            <p class="text-xs mt-1" style="color:#333;">Masukkan judul atau deskripsi lalu klik <span
+                                    style="color:#ff2d55;">Cek Kemiripan</span></p>
+                        </div>
+                    </div>
+
+                    {% endif %}
+
+                </div>
+            </div><!-- end RIGHT PANEL -->
+
+        </div><!-- end MAIN GRID -->
+
+    </div><!-- end container -->
+
+    <script>
+        // Ctrl + Enter submit
+        document.addEventListener('keydown', function (e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                document.querySelector('form').submit();
+            }
+        });
+
+        // Highlight selected mode card
+        document.querySelectorAll('input[name="mode"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                document.querySelectorAll('.mode-option > div').forEach(div => {
+                    div.style.borderColor = '#2a2a2a';
+                    div.style.background = '#1c1c1c';
+                });
+                const selectedDiv = radio.nextElementSibling;
+                selectedDiv.style.borderColor = '#ff2d55';
+                selectedDiv.style.background = '#1e0810';
+                selectedDiv.querySelectorAll('svg').forEach(svg => svg.style.color = '#ff2d55');
+                selectedDiv.querySelectorAll('span').forEach(span => span.style.color = '#ff6b6b');
+            });
+        });
+
+        // Apply initial highlight
+        document.querySelector('input[name="mode"]:checked').dispatchEvent(new Event('change'));
+
+        // Enable/disable inputs based on mode
+        function updateInputState(mode) {
+            const judulInput = document.querySelector('input[name="judul"]');
+            const deskripsiInput = document.querySelector('textarea[name="deskripsi"]');
+
+            const disableStyle = (el) => {
+                el.disabled = true;
+                el.style.opacity = '0.35';
+                el.style.cursor = 'not-allowed';
+                el.style.borderColor = '#2a2a2a';
+                el.value = '';
+            };
+            const enableStyle = (el) => {
+                el.disabled = false;
+                el.style.opacity = '1';
+                el.style.cursor = 'text';
+            };
+
+            if (mode === 'judul') {
+                enableStyle(judulInput);
+                disableStyle(deskripsiInput);
+            } else if (mode === 'deskripsi') {
+                disableStyle(judulInput);
+                enableStyle(deskripsiInput);
+            } else {
+                enableStyle(judulInput);
+                enableStyle(deskripsiInput);
+            }
+        }
+
+        document.querySelectorAll('input[name="mode"]').forEach(radio => {
+            radio.addEventListener('change', () => updateInputState(radio.value));
+        });
+
+        // Apply on load
+        updateInputState(document.querySelector('input[name="mode"]:checked').value);
+
+        // Reset button — redirect to GET to clear server-rendered results
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            window.location.href = window.location.pathname;
+        });
+
+        document.getElementById('resetBtn').addEventListener('mouseenter', function () {
+            this.style.borderColor = '#ff2d55';
+            this.style.color = '#ff2d55';
+        });
+        document.getElementById('resetBtn').addEventListener('mouseleave', function () {
+            this.style.borderColor = '#2a2a2a';
+            this.style.color = '#888';
+        });
+
+        // Focus highlight on inputs
+        document.querySelectorAll('input[type="text"], textarea').forEach(el => {
+            el.addEventListener('focus', () => el.style.borderColor = '#ff2d55');
+            el.addEventListener('blur', () => el.style.borderColor = '#2a2a2a');
+        });
+    </script>
+
+</body>
+
+</html>
