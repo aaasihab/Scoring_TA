@@ -4,7 +4,7 @@ import numpy as np
 from engine.preprocessing import combine_text
 from engine.embedding import encode_text
 from engine.similarity import compute_similarity, get_top_k
-from engine.novelty import calculate_novelty
+from engine.unique import calculate_unique
 from engine.preprocessing import preprocess_text
 
 
@@ -32,16 +32,19 @@ def search_similar(judul, deskripsi, mode):
 
     if mode == "judul":
 
+        raw_query = judul
         query_text = preprocess_text(judul)
         dataset_embedding = embedding_judul
 
     elif mode == "deskripsi":
 
+        raw_query = deskripsi
         query_text = preprocess_text(deskripsi)
         dataset_embedding = embedding_deskripsi
 
     elif mode == "kombinasi":
 
+        raw_query = judul + " " + deskripsi
         query_text = combine_text(judul, deskripsi)
         dataset_embedding = embedding_gabungan
 
@@ -69,14 +72,20 @@ def search_similar(judul, deskripsi, mode):
 
         if mode == "judul":
             text_result = dataset.iloc[idx]["judul_preprocessed"]
+            raw_text_result = dataset.iloc[idx]["judul_ta"]
 
         elif mode == "deskripsi":
             text_result = dataset.iloc[idx]["deskripsi_preprocessed"]
+            raw_text_result = dataset.iloc[idx]["deskripsi"]
 
         else:
             text_result = (
                 dataset.iloc[idx]["judul_preprocessed"] + " " +
                 dataset.iloc[idx]["deskripsi_preprocessed"]
+            )
+            raw_text_result = (
+                dataset.iloc[idx]["judul_ta"] + " " +
+                dataset.iloc[idx]["deskripsi"]
             )
 
         # ==============================
@@ -100,11 +109,12 @@ def search_similar(judul, deskripsi, mode):
             "score": score,
             "label": label
         })
-    novelty = calculate_novelty(top_scores)
+    unique = calculate_unique(top_scores)
 
     return {
+        "raw_query": raw_query,
         "query": query_text,
         "mode": mode,
         "results": results,
-        "novelty": novelty
+        "unique": unique
     }
