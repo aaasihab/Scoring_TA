@@ -24,3 +24,6 @@ Thumbs.db
 # model
 model/
 *.safetensors
+
+terbaru/
+lama/
