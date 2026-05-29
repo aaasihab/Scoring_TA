@@ -12,7 +12,7 @@ from engine.preprocessing import preprocess_text
 # Load Dataset
 # ======================================
 
-dataset = pd.read_csv("dataset/df_train.csv")
+dataset = pd.read_excel("dataset/df_train.xlsx")
 
 
 # ======================================
@@ -45,7 +45,10 @@ def search_similar(judul, deskripsi, mode):
     elif mode == "kombinasi":
 
         raw_query = judul + " " + deskripsi
-        query_text = combine_text(judul, deskripsi)
+        query = combine_text(judul, deskripsi)
+        query_text = query[0]
+        query_judul = query[1]
+        query_deskripsi = query[2]
         dataset_embedding = embedding_gabungan
 
     else:
@@ -87,6 +90,8 @@ def search_similar(judul, deskripsi, mode):
                 dataset.iloc[idx]["judul_ta"] + " " +
                 dataset.iloc[idx]["deskripsi"]
             )
+            text_judul = dataset.iloc[idx]["judul_preprocessed"]
+            text_deskripsi = dataset.iloc[idx]["deskripsi_preprocessed"]
 
         # ==============================
         # Klasifikasi Skala
@@ -104,17 +109,29 @@ def search_similar(judul, deskripsi, mode):
         # Simpan hasil
         # ==============================
 
-        results.append({
+        result_item = {
             "text": text_result,
             "score": score,
             "label": label
-        })
+        }
+
+        if mode == "kombinasi":
+            result_item["text_judul"] = text_judul
+            result_item["text_deskripsi"] = text_deskripsi
+
+        results.append(result_item)
     unique = calculate_unique(top_scores)
 
-    return {
+    result_dict = {
         "raw_query": raw_query,
         "query": query_text,
         "mode": mode,
         "results": results,
         "unique": unique
     }
+
+    if mode == "kombinasi":
+        result_dict["query_judul"] = query_judul
+        result_dict["query_deskripsi"] = query_deskripsi
+
+    return result_dict

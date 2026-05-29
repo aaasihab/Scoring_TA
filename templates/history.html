@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat Pengujian – Sistem Penilaian Judul TA</title>
     <meta name="description" content="Riwayat hasil pengujian kemiripan judul tugas akhir">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -10,15 +12,15 @@
             theme: {
                 extend: {
                     colors: {
-                        'base':    '#f5f4f0',
+                        'base': '#f5f4f0',
                         'surface': '#ffffff',
-                        'card':    '#fafaf8',
-                        'border':  '#e4e2db',
-                        'muted':   '#c8c5bc',
-                        'accent':  '#2563eb',
+                        'card': '#fafaf8',
+                        'border': '#e4e2db',
+                        'muted': '#c8c5bc',
+                        'accent': '#2563eb',
                         'accent2': '#3b82f6',
-                        'dim':     '#6b7280',
-                        'label':   '#374151',
+                        'dim': '#6b7280',
+                        'label': '#374151',
                     },
                     fontFamily: {
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
@@ -28,85 +30,365 @@
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
     <style>
-        body { background-color: #f0ede6; }
+        body {
+            background-color: #f0ede6;
+        }
 
         /* Paper texture */
         body::before {
             content: '';
             position: fixed;
             inset: 0;
-            background-image:
-                radial-gradient(ellipse 80% 50% at 20% 10%, rgba(219,210,255,0.18) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(186,230,255,0.14) 0%, transparent 60%);
             pointer-events: none;
             z-index: 0;
         }
 
-        .page-content { position: relative; z-index: 1; }
+        .page-content {
+            position: relative;
+            z-index: 1;
+        }
 
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #f0ede6; }
-        ::-webkit-scrollbar-thumb { background: #d1cec7; border-radius: 2px; }
+        ::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0e0e0e;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2564ebd7;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3e7bff;
+            border-radius: 10px;
+        }
 
         .card {
             background: #ffffff;
             border: 1px solid #e8e5de;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
             transition: box-shadow 200ms ease, border-color 200ms ease;
         }
+
         .card:hover {
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 28px rgba(0,0,0,0.07);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 8px 28px rgba(0, 0, 0, 0.07);
             border-color: #d9d5cc;
         }
 
-        * { transition-property: background-color, border-color, opacity, box-shadow, color; transition-duration: 150ms; }
+        * {
+            transition-property: background-color, border-color, opacity, box-shadow, color;
+            transition-duration: 150ms;
+        }
 
-        .detail-row { display: none; }
-        .detail-row.active { display: table-row; }
+        .detail-row {
+            display: none;
+        }
 
-        tr.expandable { cursor: pointer; }
-        tr.expandable:hover { background: #f8f7f4 !important; }
+        .detail-row.active {
+            display: table-row;
+        }
+
+        tr.expandable {
+            cursor: pointer;
+        }
+
+        tr.expandable:hover {
+            background: #f8f7f4 !important;
+        }
+
+        tr.expandable.open .chevron {
+            transform: rotate(180deg);
+        }
+
+        /* Mobile Table Responsive Cards */
+        @media (max-width: 768px) {
+
+            #historyTable,
+            #historyTable tbody,
+            #historyTable tr,
+            #historyTable td {
+                display: block;
+                width: 100%;
+            }
+
+            #historyTable thead {
+                display: none;
+            }
+
+            /* Main Row Card Style */
+            #historyTable tr.expandable {
+                margin-bottom: 1rem;
+                border: 1px solid #e8e5de;
+                border-radius: 0.75rem;
+                background: #ffffff;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+                padding-bottom: 0.5rem;
+            }
+
+            #historyTable td {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                padding: 0.75rem 1rem;
+                border-bottom: 1px solid #f3f4f6;
+            }
+
+            #historyTable td:last-child {
+                border-bottom: none;
+                padding-bottom: 1rem;
+            }
+
+            /* Pseudo element for Column Titles */
+            #historyTable td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: #6b7280;
+                text-transform: uppercase;
+                font-size: 0.65rem;
+                letter-spacing: 0.05em;
+                margin-right: 1rem;
+                flex-shrink: 0;
+            }
+
+            /* Special layout for Query so it wraps nicely */
+            #historyTable td[data-label="Query"] {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            #historyTable td[data-label="Query"]::before {
+                margin-bottom: 0.5rem;
+            }
+
+            /* Detail Row Styling on Mobile */
+            .detail-row.active {
+                display: block !important;
+            }
+
+            .detail-row td {
+                padding: 1rem;
+                display: block;
+                border: none;
+            }
+
+            .detail-row td::before {
+                display: none;
+                /* No pseudo labels in detail wrapper */
+            }
+
+            #historyTable tbody,
+            #historyTable tr:not(.detail-row) {
+                /* hanya baris utama yang menjadi block */
+                display: block;
+                width: 100%;
+            }
+
+            /* atau */
+            #historyTable tr.expandable {
+                display: block;
+            }
+
+            /* detail row tetap diatur display-nya */
+            #historyTable tr.detail-row {
+                display: none;
+            }
+
+            #historyTable tr.detail-row.active {
+                display: block;
+            }
+
+
+            /* Inner Top 5 Table */
+            .detail-row table,
+            .detail-row tbody,
+            .detail-row tr,
+            .detail-row td {
+                display: block;
+                width: 100%;
+            }
+
+            .detail-row thead {
+                display: none;
+            }
+
+            .detail-row tr.border-t {
+                margin-bottom: 0.75rem;
+                border: 1px solid #eeece6;
+                border-radius: 0.5rem;
+                background: #ffffff;
+            }
+
+            .detail-row tr.border-t td {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                padding: 0.5rem 0.75rem;
+                border-bottom: 1px solid #f9fafb;
+            }
+
+            .detail-row tr.border-t td::before {
+                content: attr(data-label);
+                display: block;
+                font-weight: 600;
+                color: #9ca3af;
+                text-transform: uppercase;
+                font-size: 0.65rem;
+                margin-right: 1rem;
+                flex-shrink: 0;
+            }
+
+            .detail-row tr.border-t td[data-label="Teks"] {
+                flex-direction: column;
+            }
+
+            .detail-row tr.border-t td[data-label="Teks"]::before {
+                margin-bottom: 0.25rem;
+            }
+        }
+
+        /* Header */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #dee2e8;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #6b7280;
+            font-weight: 500;
+            font-size: 0.8125rem;
+            padding: 6px 14px;
+            border-radius: 8px;
+            transition: all 150ms;
+        }
+
+        .nav-link:hover {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .nav-link.active {
+            background: #eff6ff;
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .site-footer {
+            border-top: 1px solid #e8e5de;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
     </style>
 </head>
 
-<body class="min-h-screen font-sans" style="background-color:#f0ede6; color:#374151;">
+<body class="min-h-screen font-sans flex flex-col" style="background-color:#f0ede6; color:#374151;">
 
-    <div class="page-content max-w-5xl mx-auto px-4 py-10">
+    <!-- ====== HEADER ====== -->
+    <header class="site-header bg-white">
+        <div class="w-full px-4 lg:px-10 flex items-center justify-between h-14">
+            <a href="/" class="flex items-center gap-2.5" style="text-decoration:none;">
+                <img src="{{ url_for('static', filename='unuja.png') }}" alt="Logo"
+                    class="h-8 w-8 rounded-lg object-contain">
+                <span class="text-sm font-semibold tracking-tight" style="color:#111827;">Sistem Penilaian TA</span>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-1">
+                <a href="/" class="nav-link">
+                    <span class="flex items-center gap-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                            <polyline points="9 22 9 12 15 12 15 22" />
+                        </svg>
+                        Beranda
+                    </span>
+                </a>
+                <a href="/history" class="nav-link active">
+                    <span class="flex items-center gap-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 8v4l3 3" />
+                            <circle cx="12" cy="12" r="10" />
+                        </svg>
+                        Riwayat
+                    </span>
+                </a>
+            </nav>
+
+            <button id="mobile-menu-btn"
+                class="md:hidden p-2 text-gray-500 hover:bg-gray-100 rounded-lg focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" y1="12" x2="20" y2="12" />
+                    <line x1="4" y1="6" x2="20" y2="6" />
+                    <line x1="4" y1="18" x2="20" y2="18" />
+                </svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden absolute w-full bg-white border-b shadow-sm z-50">
+            <nav class="flex flex-col px-4 py-3 gap-2">
+                <a href="/" class="flex items-center gap-2 p-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
+                    Beranda
+                </a>
+                <a href="/history"
+                    class="flex items-center gap-2 p-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 8v4l3 3" />
+                        <circle cx="12" cy="12" r="10" />
+                    </svg>
+                    Riwayat
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-content w-full px-4 lg:px-10 py-6 flex-1">
 
         <!-- ====== PAGE TITLE ====== -->
-        <div class="mb-8 flex items-center justify-between">
-            <div class="flex items-start gap-4">
-                <div class="w-1 h-10 rounded-full mt-0.5 flex-shrink-0" style="background:linear-gradient(180deg,#2563eb,#06b6d4);"></div>
-                <div>
-                    <h1 class="text-2xl font-semibold tracking-tight" style="color:#111827;">
-                        Riwayat Pengujian
-                    </h1>
-                    <p class="text-xs mt-1" style="color:#9ca3af;">History hasil pengecekan kemiripan judul TA</p>
-                </div>
+        <div class="mb-6 flex items-center gap-4">
+            <div class="w-1 h-8 rounded-full flex-shrink-0" style="background:linear-gradient(180deg,#2563eb,#2563eb);">
             </div>
-            <a href="/"
-               class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold"
-               style="background:#f8f7f4; border:1px solid #e4e2db; color:#6b7280; text-decoration:none; transition: all 150ms;"
-               onmouseenter="this.style.borderColor='#2563eb'; this.style.color='#2563eb';"
-               onmouseleave="this.style.borderColor='#e4e2db'; this.style.color='#6b7280';">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/>
-                </svg>
-                Kembali
-            </a>
+            <div>
+                <h1 class="text-xl font-semibold tracking-tight" style="color:#111827;">
+                    Riwayat Pengujian
+                </h1>
+                <p class="text-xs mt-1" style="color:#9ca3af;">History hasil pengecekan kemiripan judul TA</p>
+            </div>
         </div>
 
         <!-- ====== MAIN CARD ====== -->
         <div class="rounded-2xl card">
 
             <!-- Card Header -->
-            <div class="flex items-center justify-between px-6 py-4" style="border-bottom:1px solid #eeece6;">
+            <div class="flex flex-col md:flex-row md:items-center justify-between px-6 py-4 gap-4 md:gap-0"
+                style="border-bottom:1px solid #eeece6;">
                 <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#fdf4ff; border:1px solid #f0abfc;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/>
+                    <div class="w-9 h-9 rounded-xl flex items-center justify-center"
+                        style="background:#fdf4ff; border:1px solid #f0abfc;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 8v4l3 3" />
+                            <circle cx="12" cy="12" r="10" />
                         </svg>
                     </div>
                     <div>
@@ -117,13 +399,16 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 w-full md:w-auto">
                     {% if history %}
                     <a href="/history/download"
-                       class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold text-white"
-                       style="background:linear-gradient(135deg,#2563eb,#1d4ed8); box-shadow:0 4px 14px rgba(37,99,235,0.28); text-decoration:none;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                        class="w-full md:w-auto flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold text-white"
+                        style="background:linear-gradient(135deg,#2563eb,#1d4ed8); box-shadow:0 4px 14px rgba(37,99,235,0.28); text-decoration:none;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" />
                         </svg>
                         Download Excel
                     </a>
@@ -137,12 +422,26 @@
                 {% if history %}
 
                 <!-- INFO -->
-                <div class="rounded-xl px-4 py-3 text-xs flex items-center gap-3 mb-5"
-                     style="background:#eff6ff; border:1px solid #dbeafe; color:#2563eb;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
-                    </svg>
-                    Klik baris untuk melihat detail Top 5 hasil kemiripan
+                <div class="rounded-xl px-4 py-3 text-xs flex flex-col gap-1.5 mb-5"
+                    style="background:#eff6ff; border:1px solid #dbeafe; color:#2563eb;">
+                    <div class="flex items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            style="flex-shrink:0;">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 16v-4" />
+                            <path d="M12 8h.01" />
+                        </svg>
+                        <span><strong>Klik baris utama</strong> untuk melihat detail Top 5 hasil kemiripan.</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            style="flex-shrink:0; opacity:0;">
+                            <circle cx="12" cy="12" r="10" />
+                        </svg>
+                        <span><strong>Klik pada teks yang terpotong</strong> untuk melihat keseluruhan teks.</span>
+                    </div>
                 </div>
 
                 <!-- HISTORY TABLE -->
@@ -150,61 +449,126 @@
                     <table class="w-full text-sm" id="historyTable">
                         <thead>
                             <tr style="background:#f8f7f4; border-bottom:1px solid #eeece6;">
-                                <th class="text-left px-4 py-3 text-xs font-medium uppercase tracking-widest w-8" style="color:#9ca3af;">#</th>
-                                <th class="text-left px-4 py-3 text-xs font-medium uppercase tracking-widest" style="color:#9ca3af;">Waktu</th>
-                                <th class="text-left px-4 py-3 text-xs font-medium uppercase tracking-widest" style="color:#9ca3af;">Mode</th>
-                                <th class="text-left px-4 py-3 text-xs font-medium uppercase tracking-widest" style="color:#9ca3af;">Query</th>
-                                <th class="text-right px-4 py-3 text-xs font-medium uppercase tracking-widest whitespace-nowrap" style="color:#9ca3af;">Skor Unik</th>
-                                <th class="text-center px-4 py-3 text-xs font-medium uppercase tracking-widest whitespace-nowrap" style="color:#9ca3af;">Label</th>
+                                <th class="text-left px-4 py-3 text-xs font-medium uppercase tracking-widest w-8"
+                                    style="color:#9ca3af;">No</th>
+                                <th class="text-left px-4 py-3 text-xs font-medium uppercase tracking-widest"
+                                    style="color:#9ca3af;">Waktu</th>
+                                <th class="text-left px-4 py-3 text-xs font-medium uppercase tracking-widest"
+                                    style="color:#9ca3af;">Mode</th>
+                                <th class="text-left px-4 py-3 text-xs font-medium uppercase tracking-widest"
+                                    style="color:#9ca3af;">Query</th>
+                                <th class="text-right px-4 py-3 text-xs font-medium uppercase tracking-widest whitespace-nowrap"
+                                    style="color:#9ca3af;">Skor Unik</th>
+                                <th class="text-center px-4 py-3 text-xs font-medium uppercase tracking-widest whitespace-nowrap"
+                                    style="color:#9ca3af;">Label</th>
+                                <th class="w-8"></th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for h in history %}
                             <!-- Main row -->
-                            <tr class="border-t expandable" style="border-color:#f0ede6;" onclick="toggleDetail({{ loop.index }})">
-                                <td class="px-4 py-3 font-mono text-xs" style="color:#9ca3af;">{{ h["No"] }}</td>
-                                <td class="px-4 py-3 text-xs font-mono whitespace-nowrap" style="color:#6b7280;">{{ h["Timestamp"] }}</td>
-                                <td class="px-4 py-3 text-xs">
+                            <tr class="border-t expandable" style="border-color:#f0ede6;"
+                                onclick="toggleDetail({{ loop.index }}, this)">
+                                <td class="px-4 py-3 font-mono text-xs" style="color:#9ca3af;" data-label="No">{{
+                                    h["No"]
+                                    }}</td>
+                                <td class="px-4 py-3 text-xs font-mono whitespace-nowrap" style="color:#6b7280;"
+                                    data-label="Waktu">{{
+                                    h["Timestamp"] }}</td>
+                                <td class="px-4 py-3 text-xs" data-label="Mode">
                                     <span class="px-2 py-0.5 rounded-md font-medium font-mono"
-                                          style="background:#eff6ff; border:1px solid #dbeafe; color:#2563eb;">
+                                        style="background:#eff6ff; border:1px solid #dbeafe; color:#2563eb;">
                                         {{ h["Mode"] }}
                                     </span>
                                 </td>
-                                <td class="px-4 py-3 text-xs leading-relaxed" style="color:#374151; max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-                                    {{ h["Query (Raw)"] }}
+                                <td class="px-4 py-3 text-xs leading-relaxed"
+                                    style="color:#374151; word-break:break-word;" data-label="Query">
+                                    {% if h["Mode"] == 'kombinasi' and h["Query (Raw Judul)"] %}
+                                    {% set t_judul = h["Query (Raw Judul)"]|length > 200 %}
+                                    {% set t_desc = h["Query (Raw Deskripsi)"]|length > 200 %}
+                                    {% set t_any = t_judul or t_desc %}
+                                    <div class="flex flex-col gap-2 p-1.5 rounded transition-colors group {{ 'cursor-pointer hover:bg-gray-50' if t_any else '' }}"
+                                        {% if t_any
+                                        %}onclick="event.stopPropagation(); showModal('Detail Query Kombinasi', {{ ('<strong>Judul:</strong><br>' ~ h['Query (Raw Judul)']|replace('\n', '<br>') ~ '<br><br><strong>Deskripsi:</strong><br>' ~ h['Query (Raw Deskripsi)']|replace('\n', '<br>')) | tojson | forceescape }})"
+                                        {% endif %}>
+                                        <div>
+                                            <span class="inline-block text-xs font-semibold px-1.5 py-0.5 rounded mb-1"
+                                                style="background:#eff6ff; border:1px solid #dbeafe; color:#2563eb; font-size:10px;">JUDUL</span>
+                                            <p class="font-medium transition-colors {{ 'group-hover:!text-blue-600' if t_any else '' }}"
+                                                style="color:#1f2937;">{{ (h["Query (Raw Judul)"][:200] ~ '...') if
+                                                t_judul else h["Query (Raw Judul)"] }}</p>
+                                        </div>
+                                        <div style="border-top:1px dashed #e4e2db; padding-top:6px;">
+                                            <span class="inline-block text-xs font-semibold px-1.5 py-0.5 rounded mb-1"
+                                                style="background:#fef3c7; border:1px solid #fcd34d; color:#92400e; font-size:10px;">DESKRIPSI</span>
+                                            <p class="transition-colors {{ 'group-hover:!text-blue-600' if t_any else '' }}"
+                                                style="color:#6b7280;">{{ (h["Query (Raw Deskripsi)"][:200] ~ '...') if
+                                                t_desc else h["Query (Raw Deskripsi)"] }}</p>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    {% set t_any = h["Query (Raw)"]|length > 200 %}
+                                    <div class="p-1.5 rounded transition-colors {{ 'cursor-pointer hover:bg-gray-50 hover:!text-blue-600' if t_any else '' }}"
+                                        {% if t_any
+                                        %}onclick="event.stopPropagation(); showModal('Detail Query', {{ h['Query (Raw)'] | replace('\n', '<br>') | tojson | forceescape }})"
+                                        {% endif %}>
+                                        {{ (h["Query (Raw)"][:200] ~ '...') if t_any else h["Query (Raw)"] }}
+                                    </div>
+                                    {% endif %}
                                 </td>
-                                <td class="px-4 py-3 text-right font-mono text-xs font-medium" style="color:#2563eb;">
+                                <td class="px-4 py-3 text-right font-mono text-xs font-medium" style="color:#2563eb;"
+                                    data-label="Skor Unik">
                                     {{ h["Unique Score (Max)"] }}
                                 </td>
-                                <td class="px-4 py-3 text-center">
+                                <td class="px-4 py-3 text-center" data-label="Label">
                                     {% set lbl = h["Label Unique (Max)"] %}
                                     {% if lbl == "Sangat Menarik" %}
-                                    <span class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
-                                          style="background:#f0fdf4; border:1px solid #86efac; color:#15803d;">{{ lbl }}</span>
+                                    <span
+                                        class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
+                                        style="background:#f0fdf4; border:1px solid #86efac; color:#15803d;">{{ lbl
+                                        }}</span>
                                     {% elif lbl == "Cukup Menarik" %}
-                                    <span class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
-                                          style="background:#ecfdf5; border:1px solid #6ee7b7; color:#059669;">{{ lbl }}</span>
+                                    <span
+                                        class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
+                                        style="background:#ecfdf5; border:1px solid #6ee7b7; color:#059669;">{{ lbl
+                                        }}</span>
                                     {% elif lbl == "Kurang Menarik" %}
-                                    <span class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
-                                          style="background:#fffbeb; border:1px solid #fcd34d; color:#b45309;">{{ lbl }}</span>
+                                    <span
+                                        class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
+                                        style="background:#fffbeb; border:1px solid #fcd34d; color:#b45309;">{{ lbl
+                                        }}</span>
                                     {% else %}
-                                    <span class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
-                                          style="background:#fef2f2; border:1px solid #fca5a5; color:#b91c1c;">{{ lbl }}</span>
+                                    <span
+                                        class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
+                                        style="background:#fef2f2; border:1px solid #fca5a5; color:#b91c1c;">{{ lbl
+                                        }}</span>
                                     {% endif %}
+                                </td>
+                                <td class="px-4 py-3 text-center" style="color:#9ca3af;" data-label="Aksi">
+                                    <svg class="chevron transition-transform duration-200"
+                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
                                 </td>
                             </tr>
 
                             <!-- Detail row (hidden by default) -->
                             <tr class="detail-row" id="detail-{{ loop.index }}" style="background:#fafaf8;">
-                                <td colspan="6" class="px-4 py-4">
+                                <td colspan="7" class="px-4 py-4">
                                     <div class="rounded-xl overflow-hidden" style="border:1px solid #eeece6;">
                                         <table class="w-full text-xs">
                                             <thead>
                                                 <tr style="background:#f3f2ee;">
-                                                    <th class="text-left px-3 py-2 font-medium uppercase tracking-widest" style="color:#9ca3af; width:30px;">Top</th>
-                                                    <th class="text-left px-3 py-2 font-medium uppercase tracking-widest" style="color:#9ca3af;">Teks</th>
-                                                    <th class="text-right px-3 py-2 font-medium uppercase tracking-widest" style="color:#9ca3af;">Skor</th>
-                                                    <th class="text-center px-3 py-2 font-medium uppercase tracking-widest" style="color:#9ca3af;">Label</th>
+                                                    <th class="text-left px-3 py-2 font-medium uppercase tracking-widest"
+                                                        style="color:#9ca3af; width:30px;">Top</th>
+                                                    <th class="text-left px-3 py-2 font-medium uppercase tracking-widest"
+                                                        style="color:#9ca3af;">Teks</th>
+                                                    <th class="text-right px-3 py-2 font-medium uppercase tracking-widest"
+                                                        style="color:#9ca3af;">Skor</th>
+                                                    <th class="text-center px-3 py-2 font-medium uppercase tracking-widest"
+                                                        style="color:#9ca3af;">Label</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -214,23 +578,72 @@
                                                 {% set lbl_key = "Top " ~ i ~ " - Label" %}
                                                 {% if h[txt_key] %}
                                                 <tr class="border-t" style="border-color:#eeece6;">
-                                                    <td class="px-3 py-2 font-mono" style="color:#9ca3af;">{{ i }}</td>
-                                                    <td class="px-3 py-2 leading-relaxed" style="color:#374151; word-break:break-word;">{{ h[txt_key] }}</td>
+                                                    <td class="px-3 py-2 font-mono" style="color:#9ca3af;"
+                                                        data-label="Top">{{ i }}</td>
+                                                    <td class="px-3 py-2 leading-relaxed"
+                                                        style="color:#374151; word-break:break-word;" data-label="Teks">
+                                                        {% if h["Mode"] == 'kombinasi' and h["Top " ~ i ~ " - Judul"] %}
+                                                        {% set t_judul = h["Top " ~ i ~ " - Judul"]|length > 200 %}
+                                                        {% set t_desc = h["Top " ~ i ~ " - Deskripsi"]|length > 200 %}
+                                                        {% set t_any = t_judul or t_desc %}
+                                                        <div class="flex flex-col gap-2 p-1 rounded transition-colors group {{ 'cursor-pointer hover:bg-gray-50' if t_any else '' }}"
+                                                            {% if t_any
+                                                            %}onclick="event.stopPropagation(); showModal('Detail Kombinasi', {{ ('<strong>Judul:</strong><br>' ~ h['Top ' ~ i ~ ' - Judul']|replace('\n', '<br>') ~ '<br><br><strong>Deskripsi:</strong><br>' ~ h['Top ' ~ i ~ ' - Deskripsi']|replace('\n', '<br>')) | tojson | forceescape }})"
+                                                            {% endif %}>
+                                                            <div>
+                                                                <span
+                                                                    class="inline-block text-xs font-semibold px-1.5 py-0.5 rounded mb-1"
+                                                                    style="background:#eff6ff; border:1px solid #dbeafe; color:#2563eb; font-size:10px;">JUDUL</span>
+                                                                <p class="font-medium transition-colors {{ 'group-hover:!text-blue-600' if t_any else '' }}"
+                                                                    style="color:#1f2937;">
+                                                                    {{ (h["Top " ~ i ~ " - Judul"][:200] ~ '...') if
+                                                                    t_judul else h["Top " ~ i ~ " - Judul"] }}
+                                                                </p>
+                                                            </div>
+                                                            <div
+                                                                style="border-top:1px dashed #e4e2db; padding-top:6px;">
+                                                                <span
+                                                                    class="inline-block text-xs font-semibold px-1.5 py-0.5 rounded mb-1"
+                                                                    style="background:#fef3c7; border:1px solid #fcd34d; color:#92400e; font-size:10px;">DESKRIPSI</span>
+                                                                <p class="transition-colors {{ 'group-hover:!text-blue-600' if t_any else '' }}"
+                                                                    style="color:#6b7280;">
+                                                                    {{ (h["Top " ~ i ~ " - Deskripsi"][:200] ~ '...') if
+                                                                    t_desc else h["Top " ~ i ~ " - Deskripsi"] }}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        {% else %}
+                                                        {% set t_any = h[txt_key]|length > 200 %}
+                                                        <div class="p-1 rounded transition-colors {{ 'cursor-pointer hover:bg-gray-50 hover:!text-blue-600' if t_any else '' }}"
+                                                            {% if t_any
+                                                            %}onclick="event.stopPropagation(); showModal('Detail Teks', {{ h[txt_key] | replace('\n', '<br>') | tojson | forceescape }})"
+                                                            {% endif %}>
+                                                            {{ (h[txt_key][:200] ~ '...') if t_any else h[txt_key] }}
+                                                        </div>
+                                                        {% endif %}
+                                                    </td>
                                                     <td class="px-3 py-2 text-right font-mono font-medium whitespace-nowrap"
-                                                        style="color:{% if i == 1 %}#2563eb{% else %}#9ca3af{% endif %};">
+                                                        style="color:{% if i == 1 %}#2563eb{% else %}#9ca3af{% endif %};"
+                                                        data-label="Skor">
                                                         {{ h[scr_key] }}
                                                     </td>
-                                                    <td class="px-3 py-2 text-center">
+                                                    <td class="px-3 py-2 text-center" data-label="Label">
                                                         {% set rl = h[lbl_key] %}
                                                         {% if rl == "Sangat Mirip" %}
-                                                        <span class="inline-block text-xs font-semibold px-2 py-0.5 rounded-md"
-                                                              style="background:#fef2f2; border:1px solid #fca5a5; color:#b91c1c;">{{ rl }}</span>
+                                                        <span
+                                                            class="inline-block text-xs font-semibold px-2 py-0.5 rounded-md"
+                                                            style="background:#fef2f2; border:1px solid #fca5a5; color:#b91c1c;">{{
+                                                            rl }}</span>
                                                         {% elif rl == "Mirip" %}
-                                                        <span class="inline-block text-xs font-semibold px-2 py-0.5 rounded-md"
-                                                              style="background:#fffbeb; border:1px solid #fcd34d; color:#b45309;">{{ rl }}</span>
+                                                        <span
+                                                            class="inline-block text-xs font-semibold px-2 py-0.5 rounded-md"
+                                                            style="background:#fffbeb; border:1px solid #fcd34d; color:#b45309;">{{
+                                                            rl }}</span>
                                                         {% else %}
-                                                        <span class="inline-block text-xs font-semibold px-2 py-0.5 rounded-md"
-                                                              style="background:#f0fdf4; border:1px solid #86efac; color:#15803d;">{{ rl }}</span>
+                                                        <span
+                                                            class="inline-block text-xs font-semibold px-2 py-0.5 rounded-md"
+                                                            style="background:#f0fdf4; border:1px solid #86efac; color:#15803d;">{{
+                                                            rl }}</span>
                                                         {% endif %}
                                                     </td>
                                                 </tr>
@@ -250,9 +663,12 @@
 
                 <!-- EMPTY STATE -->
                 <div class="flex flex-col items-center justify-center py-20 gap-5">
-                    <div class="w-16 h-16 rounded-2xl flex items-center justify-center" style="background:#f8f7f4; border:1px solid #e8e5de;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d1cec7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/>
+                    <div class="w-16 h-16 rounded-2xl flex items-center justify-center"
+                        style="background:#f8f7f4; border:1px solid #e8e5de;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+                            stroke="#d1cec7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 8v4l3 3" />
+                            <circle cx="12" cy="12" r="10" />
                         </svg>
                     </div>
                     <div class="text-center">
@@ -271,14 +687,73 @@
 
     </div>
 
+    <!-- ====== FOOTER ====== -->
+    <footer class="site-footer mt-auto">
+        <div class="w-full px-4 lg:px-10 py-4 flex items-center justify-between">
+            <p class="text-xs" style="color:#9ca3af;">
+                &copy; Sistem Penilaian Judul Tugas Akhir
+            </p>
+        </div>
+    </footer>
+
+    <!-- ====== MODAL ====== -->
+    <div id="textModal"
+        class="fixed inset-0 z-[100] hidden items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm"
+        onclick="closeModal()">
+        <div class="bg-white rounded-2xl w-full max-w-2xl mx-4 shadow-2xl border border-gray-200"
+            onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+                <h3 class="text-lg font-semibold text-gray-900" id="modalTitle">Detail Teks</h3>
+                <button onclick="closeModal()" class="p-2 rounded-lg hover:bg-gray-100 text-gray-500 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6 max-h-[70vh] overflow-y-auto">
+                <p id="modalContent" class="text-sm text-gray-700 leading-relaxed"></p>
+            </div>
+        </div>
+    </div>
+
     <script>
-        function toggleDetail(id) {
+        function toggleDetail(id, element) {
             const row = document.getElementById('detail-' + id);
             if (row) {
                 row.classList.toggle('active');
+                if (element) {
+                    element.classList.toggle('open');
+                }
             }
         }
+
+        function showModal(title, content) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalContent').innerHTML = content;
+            document.getElementById('textModal').classList.remove('hidden');
+            document.getElementById('textModal').classList.add('flex');
+            document.body.style.overflow = 'hidden'; // Prevent background scroll
+        }
+
+        function closeModal() {
+            document.getElementById('textModal').classList.add('hidden');
+            document.getElementById('textModal').classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+
+            // Fungsi ketika tombol hamburger diklik
+            btn.addEventListener('click', () => {
+                // toggle class 'hidden' dari Tailwind untuk memunculkan/menyembunyikan menu
+                menu.classList.toggle('hidden');
+            });
+        });
     </script>
 
 </body>
+
 </html>

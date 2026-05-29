@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistem Penilaian Judul Tugas Akhir</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -9,15 +11,15 @@
             theme: {
                 extend: {
                     colors: {
-                        'base':    '#f5f4f0',
+                        'base': '#f5f4f0',
                         'surface': '#ffffff',
-                        'card':    '#fafaf8',
-                        'border':  '#e4e2db',
-                        'muted':   '#c8c5bc',
-                        'accent':  '#2563eb',
+                        'card': '#fafaf8',
+                        'border': '#e4e2db',
+                        'muted': '#c8c5bc',
+                        'accent': '#2563eb',
                         'accent2': '#3b82f6',
-                        'dim':     '#6b7280',
-                        'label':   '#374151',
+                        'dim': '#6b7280',
+                        'label': '#374151',
                     },
                     fontFamily: {
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
@@ -27,39 +29,78 @@
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
     <style>
-        body { background-color: #f0ede6; }
+        body {
+            background-color: #f0ede6;
+        }
 
         /* Paper texture */
         body::before {
             content: '';
             position: fixed;
             inset: 0;
-            background-image:
-                radial-gradient(ellipse 80% 50% at 20% 10%, rgba(219,210,255,0.18) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(186,230,255,0.14) 0%, transparent 60%);
             pointer-events: none;
             z-index: 0;
         }
 
-        .page-content { position: relative; z-index: 1; }
+        .page-content {
+            position: relative;
+            z-index: 1;
+        }
 
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #f0ede6; }
-        ::-webkit-scrollbar-thumb { background: #d1cec7; border-radius: 2px; }
+        ::-webkit-scrollbar {
+            width: 7px;
+        }
 
-        input[type="radio"] { accent-color: #2563eb; }
-        textarea { resize: none; }
+        ::-webkit-scrollbar-track {
+            background: #0e0e0e;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2564ebd7;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3e7bff;
+            border-radius: 10px;
+        }
+
+        /* Hanya untuk scroll horizontal di dalam .scrollable-table */
+        .scrollable-table::-webkit-scrollbar:horizontal {
+            height: 6px;
+            /* lebih tipis dari 7px */
+        }
+
+        .scrollable-table::-webkit-scrollbar-track:horizontal {
+            background: #f0ede6;
+            /* bisa disamakan atau beda */
+        }
+
+        .scrollable-table::-webkit-scrollbar-thumb:horizontal {
+            background: #2564ebb3;
+            border-radius: 8px;
+        }
+
+        input[type="radio"] {
+            accent-color: #2563eb;
+        }
+
+        textarea {
+            resize: none;
+        }
 
         .card {
             background: #ffffff;
             border: 1px solid #e8e5de;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
             transition: box-shadow 200ms ease, border-color 200ms ease;
         }
+
         .card:hover {
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 28px rgba(0,0,0,0.07);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 8px 28px rgba(0, 0, 0, 0.07);
             border-color: #d9d5cc;
         }
 
@@ -69,47 +110,169 @@
             color: #1f2937;
             transition: border-color 150ms, box-shadow 150ms;
         }
-        .styled-input::placeholder { color: #b0ada6; }
+
+        .styled-input::placeholder {
+            color: #b0ada6;
+        }
+
         .styled-input:focus {
             outline: none;
             border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+            box-shadow: 0 0 0 3px rgba(0, 81, 255, 0.2);
             background: #ffffff;
         }
+
         .styled-input:disabled {
             opacity: 0.4;
             cursor: not-allowed;
         }
-        
 
-        * { transition-property: background-color, border-color, opacity, box-shadow, color; transition-duration: 150ms; }
+
+        * {
+            transition-property: background-color, border-color, opacity, box-shadow, color;
+            transition-duration: 150ms;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            20%,
+            60% {
+                transform: translateX(-6px);
+            }
+
+            40%,
+            80% {
+                transform: translateX(6px);
+            }
+        }
+
+        /* Header */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e8e5de;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #6b7280;
+            font-weight: 500;
+            font-size: 0.8125rem;
+            padding: 6px 14px;
+            border-radius: 8px;
+            transition: all 150ms;
+        }
+
+        .nav-link:hover {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .nav-link.active {
+            background: #eff6ff;
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .site-footer {
+            border-top: 1px solid #e8e5de;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
     </style>
 </head>
 
-<body class="min-h-screen font-sans" style="background-color:#f0ede6; color:#374151;">
+<body class="scrollable-table font-sans flex flex-col" style="background-color:#f0ede6; color:#374151;">
 
-    <div class="page-content max-w-5xl mx-auto px-4 py-10">
+    <!-- ====== HEADER ====== -->
+    <header class="site-header bg-white">
+        <div class="w-full px-4 lg:px-10 flex items-center justify-between h-14">
+            <a href="/" class="flex items-center gap-2.5" style="text-decoration:none;">
+                <img src="{{ url_for('static', filename='unuja.png') }}" alt="Logo"
+                    class="h-8 w-8 rounded-lg object-contain">
+                <span class="text-sm font-semibold tracking-tight" style="color:#111827;">Sistem Penilaian TA</span>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-1">
+                <a href="/" class="nav-link active">
+                    <span class="flex items-center gap-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                            <polyline points="9 22 9 12 15 12 15 22" />
+                        </svg>
+                        Beranda
+                    </span>
+                </a>
+                <a href="/history" class="nav-link">
+                    <span class="flex items-center gap-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 8v4l3 3" />
+                            <circle cx="12" cy="12" r="10" />
+                        </svg>
+                        Riwayat
+                    </span>
+                </a>
+            </nav>
+
+            <button id="mobile-menu-btn"
+                class="md:hidden p-2 text-gray-500 hover:bg-gray-100 rounded-lg focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" y1="12" x2="20" y2="12" />
+                    <line x1="4" y1="6" x2="20" y2="6" />
+                    <line x1="4" y1="18" x2="20" y2="18" />
+                </svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden absolute w-full bg-white border-b shadow-sm z-50">
+            <nav class="flex flex-col px-4 py-3 gap-2">
+                <a href="/"
+                    class="active flex items-center gap-2 p-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
+                    Beranda
+                </a>
+                <a href="/history"
+                    class="flex items-center gap-2 p-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 8v4l3 3" />
+                        <circle cx="12" cy="12" r="10" />
+                    </svg>
+                    Riwayat
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-content w-full px-4 lg:px-10 py-6 flex-1">
 
         <!-- ====== PAGE TITLE ====== -->
-        <div class="mb-8 flex items-center justify-between">
-            <div class="flex items-start gap-4">
-                <div class="w-1 h-10 rounded-full mt-0.5 flex-shrink-0" style="background:linear-gradient(180deg,#2563eb,#06b6d4);"></div>
-                <div>
-                    <h1 class="text-2xl font-semibold tracking-tight" style="color:#111827;">
-                        Sistem Penilaian Judul Tugas Akhir
-                    </h1>
-                </div>
+        <div class="mb-6 flex items-center gap-4">
+            <div class="w-1 h-8 rounded-full flex-shrink-0" style="background:linear-gradient(180deg,#2563eb,#2563eb);">
             </div>
-            <a href="/history"
-               class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold"
-               style="background:#f8f7f4; border:1px solid #e4e2db; color:#6b7280; text-decoration:none; transition: all 150ms;"
-               onmouseenter="this.style.borderColor='#2563eb'; this.style.color='#2563eb';"
-               onmouseleave="this.style.borderColor='#e4e2db'; this.style.color='#6b7280';">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/>
-                </svg>
-                Riwayat
-            </a>
+            <div>
+                <h1 class="text-xl font-semibold tracking-tight" style="color:#111827;">
+                    Sistem Penilaian Judul Tugas Akhir
+                </h1>
+            </div>
         </div>
 
         <!-- ====== MAIN LAYOUT ====== -->
@@ -123,9 +286,13 @@
                 <!-- Card Header -->
                 <div class="flex items-center justify-between px-6 py-4" style="border-bottom:1px solid #eeece6;">
                     <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#eff6ff; border:1px solid #dbeafe;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                        <div class="w-9 h-9 rounded-xl flex items-center justify-center"
+                            style="background:#eff6ff; border:1px solid #dbeafe;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
                             </svg>
                         </div>
                         <div>
@@ -133,50 +300,54 @@
                             <p class="text-xs mt-1" style="color:#9ca3af;">Masukkan judul atau deskripsi penelitian</p>
                         </div>
                     </div>
-                    <span class="text-xs px-3 py-1 rounded-full font-medium font-mono" style="background:#eff6ff; border:1px solid #dbeafe; color:#2563eb;">
-                        semantic · search
-                    </span>
                 </div>
 
                 <!-- Card Body -->
-                <form method="POST" class="p-6 flex flex-col gap-6">
+                <form method="POST" id="mainForm" class="p-6 flex flex-col gap-6">
 
                     <!-- MODE SELECTION -->
                     <div>
-                        <p class="text-xs font-medium mb-3 uppercase tracking-widest" style="color:#9ca3af;">Mode Pengecekan</p>
-                        <div class="grid grid-cols-3 gap-2">
+                        <p class="text-xs font-medium mb-3 uppercase tracking-widest" style="color:#9ca3af;">Mode
+                            Pengecekan</p>
+                        <div class="flex flex-col md:flex-row gap-2">
 
-                            <label class="mode-option">
+                            <label class="mode-option w-full">
                                 <input type="radio" name="mode" value="judul" checked class="hidden peer">
-                                <div class="flex flex-col items-center gap-2 rounded-xl border py-3 px-2 cursor-pointer text-center"
-                                     style="border-color:#e4e2db; background:#fafaf8;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#9ca3af;">
-                                        <path d="M4 6h16M4 12h8M4 18h4"/>
+                                <div class="flex flex-row md:flex-col items-center gap-3 md:gap-2 rounded-xl border py-3 px-4 md:px-2 cursor-pointer text-left md:text-center w-full"
+                                    style="border-color:#e4e2db; background:#fafaf8;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" style="color:#9ca3af; flex-shrink:0;">
+                                        <path d="M4 6h16M4 12h8M4 18h4" />
                                     </svg>
                                     <span class="text-xs font-medium" style="color:#6b7280;">Judul</span>
                                 </div>
                             </label>
 
-                            <label class="mode-option">
+                            <label class="mode-option w-full">
                                 <input type="radio" name="mode" value="deskripsi" class="hidden peer">
-                                <div class="flex flex-col items-center gap-2 rounded-xl border py-3 px-2 cursor-pointer text-center"
-                                     style="border-color:#e4e2db; background:#fafaf8;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#9ca3af;">
-                                        <path d="M4 6h16M4 10h16M4 14h16M4 18h12"/>
+                                <div class="flex flex-row md:flex-col items-center gap-3 md:gap-2 rounded-xl border py-3 px-4 md:px-2 cursor-pointer text-left md:text-center w-full"
+                                    style="border-color:#e4e2db; background:#fafaf8;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" style="color:#9ca3af; flex-shrink:0;">
+                                        <path d="M4 6h16M4 10h16M4 14h16M4 18h12" />
                                     </svg>
                                     <span class="text-xs font-medium" style="color:#6b7280;">Deskripsi</span>
                                 </div>
                             </label>
 
-                            <label class="mode-option">
+                            <label class="mode-option w-full">
                                 <input type="radio" name="mode" value="kombinasi" class="hidden peer">
-                                <div class="flex flex-col items-center gap-2 rounded-xl border py-3 px-2 cursor-pointer text-center"
-                                     style="border-color:#e4e2db; background:#fafaf8;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#9ca3af;">
-                                        <rect x="3" y="3" width="7" height="7"/>
-                                        <rect x="14" y="3" width="7" height="7"/>
-                                        <rect x="14" y="14" width="7" height="7"/>
-                                        <rect x="3" y="14" width="7" height="7"/>
+                                <div class="flex flex-row md:flex-col items-center gap-3 md:gap-2 rounded-xl border py-3 px-4 md:px-2 cursor-pointer text-left md:text-center w-full"
+                                    style="border-color:#e4e2db; background:#fafaf8;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" style="color:#9ca3af; flex-shrink:0;">
+                                        <rect x="3" y="3" width="7" height="7" />
+                                        <rect x="14" y="3" width="7" height="7" />
+                                        <rect x="14" y="14" width="7" height="7" />
+                                        <rect x="3" y="14" width="7" height="7" />
                                     </svg>
                                     <span class="text-xs font-medium" style="color:#6b7280;">Kombinasi</span>
                                 </div>
@@ -189,36 +360,62 @@
 
                     <!-- JUDUL INPUT -->
                     <div>
-                        <label class="block text-xs font-medium mb-2 uppercase tracking-widest" style="color:#9ca3af;">Judul Tugas Akhir</label>
-                        <input type="text" name="judul"
-                               placeholder="Masukkan judul Tugas Akhir…"
-                               class="styled-input w-full rounded-xl px-4 py-3 text-sm">
+                        <label class="block text-xs font-medium mb-2 uppercase tracking-widest"
+                            style="color:#9ca3af;">Judul Tugas Akhir</label>
+                        <input type="text" name="judul" id="inputJudul" placeholder="Masukkan judul Tugas Akhir…"
+                            class="styled-input w-full rounded-xl px-4 py-3 text-sm">
+                        <p id="errorJudul" class="text-xs mt-1.5 hidden" style="color:#dc2626;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="inline-block mr-1" style="vertical-align:-1px;">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" y1="8" x2="12" y2="12" />
+                                <line x1="12" y1="16" x2="12.01" y2="16" />
+                            </svg>
+                            Judul Tugas Akhir wajib diisi
+                        </p>
                     </div>
 
                     <!-- DESKRIPSI INPUT -->
                     <div>
-                        <label class="block text-xs font-medium mb-2 uppercase tracking-widest" style="color:#9ca3af;">Deskripsi Penelitian</label>
-                        <textarea name="deskripsi" rows="4"
-                                  placeholder="Masukkan deskripsi penelitian…"
-                                  class="styled-input w-full rounded-xl px-4 py-3 text-sm"></textarea>
+                        <label class="block text-xs font-medium mb-2 uppercase tracking-widest"
+                            style="color:#9ca3af;">Deskripsi Penelitian</label>
+                        <textarea name="deskripsi" id="inputDeskripsi" rows="4"
+                            placeholder="Masukkan deskripsi penelitian…"
+                            class="styled-input w-full rounded-xl px-4 py-3 text-sm"></textarea>
+                        <p id="errorDeskripsi" class="text-xs mt-1.5 hidden" style="color:#dc2626;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="inline-block mr-1" style="vertical-align:-1px;">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" y1="8" x2="12" y2="12" />
+                                <line x1="12" y1="16" x2="12.01" y2="16" />
+                            </svg>
+                            Deskripsi Penelitian wajib diisi
+                        </p>
                     </div>
 
                     <!-- BUTTONS -->
-                    <div class="flex items-center gap-3 flex-wrap">
+                    <div class="flex flex-col-reverse md:flex-row items-stretch md:items-center gap-3">
                         <button type="submit"
-                                class="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white"
-                                style="background:linear-gradient(135deg,#2563eb,#1d4ed8); box-shadow:0 4px 14px rgba(37,99,235,0.28);">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                            class="w-full md:w-auto flex items-center justify-center gap-2 px-5 py-3 md:py-2.5 rounded-xl text-sm font-semibold text-white"
+                            style="background:linear-gradient(135deg,#2563eb,#1d4ed8); box-shadow:0 4px 14px rgba(37,99,235,0.28);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
                             </svg>
                             Cek Kemiripan
                         </button>
                         <button type="button" id="resetBtn"
-                                class="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold"
-                                style="background:#f8f7f4; border:1px solid #e4e2db; color:#6b7280;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-                                <path d="M3 3v5h5"/>
+                            class="w-full md:w-auto flex items-center justify-center gap-2 px-5 py-3 md:py-2.5 rounded-xl text-sm font-semibold"
+                            style="background:#f8f7f4; border:1px solid #e4e2db; color:#6b7280;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                                <path d="M3 3v5h5" />
                             </svg>
                             Atur Ulang
                         </button>
@@ -231,16 +428,19 @@
             <!-- =============================== -->
             <!-- RESULTS PANEL                   -->
             <!-- =============================== -->
-            <div class="rounded-2xl card">
+            <div id="results-panel" class="rounded-2xl card">
 
                 <!-- Card Header -->
                 <div class="flex items-center justify-between px-6 py-4" style="border-bottom:1px solid #eeece6;">
                     <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#f0fdf4; border:1px solid #bbf7d0;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="18" y1="20" x2="18" y2="10"/>
-                                <line x1="12" y1="20" x2="12" y2="4"/>
-                                <line x1="6" y1="20" x2="6" y2="14"/>
+                        <div class="w-9 h-9 rounded-xl flex items-center justify-center"
+                            style="background:#f0fdf4; border:1px solid #bbf7d0;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <line x1="18" y1="20" x2="18" y2="10" />
+                                <line x1="12" y1="20" x2="12" y2="4" />
+                                <line x1="6" y1="20" x2="6" y2="14" />
                             </svg>
                         </div>
                         <div>
@@ -248,7 +448,8 @@
                             <p class="text-xs mt-1" style="color:#9ca3af;">Skor kemiripan dan kebaruan penelitian</p>
                         </div>
                     </div>
-                    <span class="text-xs px-3 py-1 rounded-full font-medium font-mono" style="background:#f0fdf4; border:1px solid #bbf7d0; color:#16a34a;">
+                    <span class="text-xs px-3 py-1 rounded-full font-medium font-mono"
+                        style="background:#f0fdf4; border:1px solid #bbf7d0; color:#16a34a;">
                         output
                     </span>
                 </div>
@@ -258,11 +459,12 @@
 
                     {% if error %}
                     <div class="rounded-xl px-4 py-3 text-sm flex items-center gap-3 mb-4"
-                         style="background:#fef2f2; border:1px solid #fecaca; color:#dc2626;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        style="background:#fef2f2; border:1px solid #fecaca; color:#dc2626;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
                         </svg>
                         {{ error }}
                     </div>
@@ -273,23 +475,66 @@
                     <!-- SAVED TOAST -->
                     {% if saved %}
                     <div id="saveToast" class="rounded-xl px-4 py-3 text-sm flex items-center gap-3 mb-4"
-                         style="background:#f0fdf4; border:1px solid #bbf7d0; color:#15803d;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                        style="background:#f0fdf4; border:1px solid #bbf7d0; color:#15803d;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                            <polyline points="22 4 12 14.01 9 11.01" />
                         </svg>
                         Hasil berhasil disimpan ke riwayat
                     </div>
                     {% endif %}
 
                     <!-- META BADGES -->
-                    <div class="flex items-center gap-2 mb-6 flex-wrap">
-                        <span class="text-xs px-3 py-1 rounded-full font-mono" style="background:#eff6ff; border:1px solid #dbeafe; color:#6b7280;">
+                    <div class="flex items-center gap-2 mb-4 flex-wrap">
+                        <span class="text-xs px-3 py-1 rounded-full font-mono"
+                            style="background:#eff6ff; border:1px solid #dbeafe; color:#6b7280;">
                             mode: <span style="color:#2563eb;">{{ results.mode }}</span>
                         </span>
-                        <span class="text-xs px-3 py-1 rounded-lg font-mono break-all" style="background:#f8f7f4; border:1px solid #e4e2db; color:#6b7280;">
-                            "{{ results.raw_query }}"
+                    </div>
+
+                    <!-- QUERY DISPLAY -->
+                    {% if results.mode == 'kombinasi' %}
+                    {% set t_judul = results.query_judul|length > 200 %}
+                    {% set t_desc = results.query_deskripsi|length > 200 %}
+                    <div class="rounded-xl mb-6 overflow-hidden" style="border:1px solid #e4e2db;">
+                        <!-- Baris Judul -->
+                        <div
+                            style="display: grid; grid-template-columns: auto auto 1fr; gap: 8px 12px; align-items: baseline; background:#f8f7f4; padding: 10px 16px; border-bottom:1px solid #eeece6;">
+                            <div class="text-xs font-semibold" style="text-align: right; color:#2563eb;">judul</div>
+                            <div class="text-xs" style="color:#6b7280;">:</div>
+                            <div class="text-xs font-mono break-all transition-colors {{ 'cursor-pointer hover:!text-blue-600' if t_judul else '' }}"
+                                style="color:#374151;" {% if t_judul
+                                %}onclick="showModal('Detail Judul', {{ results.query_judul | tojson | forceescape }})"
+                                {% endif %}>
+                                {{ (results.query_judul[:200] ~ '...') if t_judul else results.query_judul }}
+                            </div>
+                        </div>
+                        <!-- Baris Deskripsi -->
+                        <div
+                            style="display: grid; grid-template-columns: auto auto 1fr; gap: 8px 12px; align-items: baseline; background:#ffffff; padding: 10px 16px;">
+                            <div class="text-xs font-semibold" style="text-align: right; color:#92400e;">deskripsi</div>
+                            <div class="text-xs" style="color:#6b7280;">:</div>
+                            <div class="text-xs font-mono break-all transition-colors {{ 'cursor-pointer hover:!text-blue-600' if t_desc else '' }}"
+                                style="color:#374151;" {% if t_desc
+                                %}onclick="showModal('Detail Deskripsi', {{ results.query_deskripsi | tojson | forceescape }})"
+                                {% endif %}>
+                                {{ (results.query_deskripsi[:200] ~ '...') if t_desc else results.query_deskripsi }}
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    {% set t_any = results.query|length > 200 %}
+                    <div class="flex items-center gap-2 mb-6 flex-wrap">
+                        <span
+                            class="text-xs px-3 py-1 rounded-lg font-mono break-all transition-colors {{ 'cursor-pointer hover:!text-blue-600 hover:!border-blue-300' if t_any else '' }}"
+                            style="background:#f8f7f4; border:1px solid #e4e2db; color:#6b7280;" {% if t_any
+                            %}onclick="showModal('Detail Query', {{ results.query | tojson | forceescape }})" {% endif
+                            %}>
+                            "{{ (results.query[:200] ~ '...') if t_any else results.query }}"
                         </span>
                     </div>
+                    {% endif %}
 
                     <!-- UNIQUE STAT CARD -->
                     <div class="mb-6">
@@ -299,20 +544,21 @@
                                 Skor Keunikan Berdasarkan Nilai {{ results.mode }} Tertinggi
                             </p>
                             <div class="flex items-end justify-between gap-2">
-                                <p class="text-2xl font-semibold font-mono" style="color:#2563eb;">{{ results.unique.unique_max }}</p>
+                                <p class="text-2xl font-semibold font-mono" style="color:#2563eb;">{{
+                                    results.unique.unique_max }}</p>
                                 {% set lm = results.unique.label_max %}
                                 {% if lm == "Sangat Menarik" %}
                                 <span class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
-                                      style="background:#f0fdf4; border:1px solid #86efac; color:#15803d;">{{ lm }}</span>
+                                    style="background:#f0fdf4; border:1px solid #86efac; color:#15803d;">{{ lm }}</span>
                                 {% elif lm == "Cukup Menarik" %}
                                 <span class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
-                                      style="background:#ecfdf5; border:1px solid #6ee7b7; color:#059669;">{{ lm }}</span>
+                                    style="background:#ecfdf5; border:1px solid #6ee7b7; color:#059669;">{{ lm }}</span>
                                 {% elif lm == "Kurang Menarik" %}
                                 <span class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
-                                      style="background:#fffbeb; border:1px solid #fcd34d; color:#b45309;">{{ lm }}</span>
+                                    style="background:#fffbeb; border:1px solid #fcd34d; color:#b45309;">{{ lm }}</span>
                                 {% else %}
                                 <span class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
-                                      style="background:#fef2f2; border:1px solid #fca5a5; color:#b91c1c;">{{ lm }}</span>
+                                    style="background:#fef2f2; border:1px solid #fca5a5; color:#b91c1c;">{{ lm }}</span>
                                 {% endif %}
                             </div>
                         </div>
@@ -321,38 +567,98 @@
 
                     <!-- RESULTS TABLE -->
                     <div>
-                        <p class="text-xs font-medium mb-3 uppercase tracking-widest" style="color:#9ca3af;">
-                            Top 5 {{ results.mode }} Termirip
-                        </p>
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
+                            <p class="text-xs font-medium uppercase tracking-widest" style="color:#9ca3af;">
+                                Top 5 {{ results.mode }} Termirip
+                            </p>
+                            <p class="text-[11px]" style="color:#6b7280;">
+                                <strong style="color:#2563eb;">Info:</strong> Klik pada teks yang terpotong di tabel
+                                untuk melihat keseluruhan teks.
+                            </p>
+                        </div>
 
-                        <div class="rounded-xl overflow-hidden" style="border:1px solid #e8e5de;">
-                            <table class="w-full text-sm">
+                        <div class="rounded-xl scrollable-table" style="border:1px solid #e8e5de; overflow-x: auto;">
+                            <table class="w-full text-sm" style="min-width: 600px;">
                                 <thead>
                                     <tr style="background:#f8f7f4; border-bottom:1px solid #eeece6;">
-                                        <th class="text-left px-4 py-3 text-xs font-medium uppercase tracking-widest w-8" style="color:#9ca3af;">#</th>
-                                        <th class="text-left px-4 py-3 text-xs font-medium uppercase tracking-widest" style="color:#9ca3af;">{{ results.mode }}</th>
-                                        <th class="text-right px-4 py-3 text-xs font-medium uppercase tracking-widest whitespace-nowrap" style="color:#9ca3af;">Skor</th>
-                                        <th class="text-center px-4 py-3 text-xs font-medium uppercase tracking-widest whitespace-nowrap" style="color:#9ca3af;">Label</th>
+                                        <th class="text-left px-4 py-3 text-xs font-medium uppercase tracking-widest w-8"
+                                            style="color:#9ca3af;">No</th>
+                                        {% if results.mode == 'kombinasi' %}
+                                        <th class="text-left px-4 py-3 text-xs font-medium uppercase tracking-widest"
+                                            style="color:#9ca3af;">Judul & Deskripsi</th>
+                                        {% else %}
+                                        <th class="text-left px-4 py-3 text-xs font-medium uppercase tracking-widest"
+                                            style="color:#9ca3af;">{{ results.mode }}</th>
+                                        {% endif %}
+                                        <th class="text-right px-4 py-3 text-xs font-medium uppercase tracking-widest whitespace-nowrap"
+                                            style="color:#9ca3af;">Skor</th>
+                                        <th class="text-center px-4 py-3 text-xs font-medium uppercase tracking-widest whitespace-nowrap"
+                                            style="color:#9ca3af;">Label</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for r in results.results %}
-                                    {% set row_bg    = '#eff6ff' if loop.index == 1 else '#ffffff' %}
+                                    {% set row_bg = '#eff6ff' if loop.index == 1 else '#ffffff' %}
                                     {% set score_col = '#2563eb' if loop.index == 1 else '#9ca3af' %}
                                     <tr class="border-t" style="border-color:#f0ede6; background:{{ row_bg }};">
-                                        <td class="px-4 py-3 font-mono text-xs" style="color:#9ca3af;">{{ loop.index }}</td>
-                                        <td class="px-4 py-3 text-xs leading-relaxed" style="color:#374151; word-break:break-word;">{{ r.text }}</td>
-                                        <td class="px-4 py-3 text-right font-mono text-xs font-medium whitespace-nowrap" style="color:{{ score_col }};">{{ r.score }}</td>
-                                        <td class="px-4 py-3 text-center">
-                                            {% if r.label == "Sangat Mirip" %}
-                                            <span class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
-                                                  style="background:#fef2f2; border:1px solid #fca5a5; color:#b91c1c;">{{ r.label }}</span>
-                                            {% elif r.label == "Mirip" %}
-                                            <span class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
-                                                  style="background:#fffbeb; border:1px solid #fcd34d; color:#b45309;">{{ r.label }}</span>
+                                        <td class="px-4 py-3 font-mono text-xs"
+                                            style="color:#9ca3af; vertical-align:top;">{{ loop.index }}
+                                        </td>
+                                        <td class="px-4 py-3 text-xs leading-relaxed"
+                                            style="color:#374151; word-break:break-word;">
+                                            {% if results.mode == 'kombinasi' %}
+                                            {% set t_judul = r.text_judul|length > 200 %}
+                                            {% set t_desc = r.text_deskripsi|length > 200 %}
+                                            {% set t_any = t_judul or t_desc %}
+                                            <div class="flex flex-col gap-2 p-1.5 rounded transition-colors group {{ 'cursor-pointer hover:bg-gray-50' if t_any else '' }}"
+                                                {% if t_any
+                                                %}onclick="showModal('Detail Kombinasi', {{ ('<strong>Judul:</strong><br>' ~ r.text_judul|replace('\n', '<br>') ~ '<br><br><strong>Deskripsi:</strong><br>' ~ r.text_deskripsi|replace('\n', '<br>')) | tojson | forceescape }})"
+                                                {% endif %}>
+                                                <div>
+                                                    <span
+                                                        class="inline-block text-xs font-semibold px-1.5 py-0.5 rounded mb-1"
+                                                        style="background:#eff6ff; border:1px solid #dbeafe; color:#2563eb; font-size:10px;">JUDUL</span>
+                                                    <p class="font-medium transition-colors {{ 'group-hover:!text-blue-600' if t_any else '' }}"
+                                                        style="color:#1f2937;">{{ (r.text_judul[:200]
+                                                        ~ '...') if t_judul else r.text_judul }}</p>
+                                                </div>
+                                                <div style="border-top:1px dashed #e4e2db; padding-top:6px;">
+                                                    <span
+                                                        class="inline-block text-xs font-semibold px-1.5 py-0.5 rounded mb-1"
+                                                        style="background:#fef3c7; border:1px solid #fcd34d; color:#92400e; font-size:10px;">DESKRIPSI</span>
+                                                    <p class="transition-colors {{ 'group-hover:!text-blue-600' if t_any else '' }}"
+                                                        style="color:#6b7280;">{{ (r.text_deskripsi[:200] ~ '...') if
+                                                        t_desc else r.text_deskripsi }}</p>
+                                                </div>
+                                            </div>
                                             {% else %}
-                                            <span class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
-                                                  style="background:#f0fdf4; border:1px solid #86efac; color:#15803d;">{{ r.label }}</span>
+                                            {% set t_any = r.text|length > 200 %}
+                                            <div class="p-1.5 rounded transition-colors {{ 'cursor-pointer hover:bg-gray-50 hover:!text-blue-600' if t_any else '' }}"
+                                                {% if t_any
+                                                %}onclick="showModal('Detail Teks', {{ r.text | replace('\n', '<br>') | tojson | forceescape }})"
+                                                {% endif %}>
+                                                {{ (r.text[:200] ~ '...') if t_any else r.text }}
+                                            </div>
+                                            {% endif %}
+                                        </td>
+                                        <td class="px-4 py-3 text-right font-mono text-xs font-medium whitespace-nowrap"
+                                            style="color:{{ score_col }}; vertical-align:top;">{{ r.score }}</td>
+                                        <td class="px-4 py-3 text-center" style="vertical-align:top;">
+                                            {% if r.label == "Sangat Mirip" %}
+                                            <span
+                                                class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
+                                                style="background:#fef2f2; border:1px solid #fca5a5; color:#b91c1c;">{{
+                                                r.label }}</span>
+                                            {% elif r.label == "Mirip" %}
+                                            <span
+                                                class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
+                                                style="background:#fffbeb; border:1px solid #fcd34d; color:#b45309;">{{
+                                                r.label }}</span>
+                                            {% else %}
+                                            <span
+                                                class="inline-block text-xs font-semibold tracking-wide px-2.5 py-1 rounded-md"
+                                                style="background:#f0fdf4; border:1px solid #86efac; color:#15803d;">{{
+                                                r.label }}</span>
                                             {% endif %}
                                         </td>
                                     </tr>
@@ -366,10 +672,13 @@
 
                     <!-- EMPTY STATE -->
                     <div class="flex flex-col items-center justify-center py-20 gap-5">
-                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center" style="background:#f8f7f4; border:1px solid #e8e5de;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d1cec7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="11" cy="11" r="8"/>
-                                <path d="m21 21-4.35-4.35"/>
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center"
+                            style="background:#f8f7f4; border:1px solid #e8e5de;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24"
+                                fill="none" stroke="#d1cec7" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
                             </svg>
                         </div>
                         <div class="text-center">
@@ -389,32 +698,140 @@
         </div>
     </div>
 
+    <!-- ====== FOOTER ====== -->
+    <footer class="site-footer mt-auto">
+        <div class="w-full px-4 lg:px-10 py-4 flex items-center justify-between">
+            <p class="text-xs" style="color:#9ca3af;">
+                &copy; Sistem Penilaian Judul Tugas Akhir
+            </p>
+        </div>
+    </footer>
+
+    <!-- ====== MODAL ====== -->
+    <div id="textModal"
+        class="fixed inset-0 z-[100] hidden items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm"
+        onclick="closeModal()">
+        <div class="bg-white rounded-2xl w-full max-w-2xl mx-4 shadow-2xl border border-gray-200"
+            onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+                <h3 class="text-lg font-semibold text-gray-900" id="modalTitle">Detail Teks</h3>
+                <button onclick="closeModal()" class="p-2 rounded-lg hover:bg-gray-100 text-gray-500 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6 max-h-[70vh] overflow-y-auto">
+                <p id="modalContent" class="text-sm text-gray-700 leading-relaxed"></p>
+            </div>
+        </div>
+    </div>
+
     <script>
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.key === 'Enter') document.querySelector('form').submit();
+        // ==============================
+        // Validation Logic
+        // ==============================
+        function getSelectedMode() {
+            const checked = document.querySelector('input[name="mode"]:checked');
+            return checked ? checked.value : 'judul';
+        }
+
+        function clearValidationErrors() {
+            const errJ = document.getElementById('errorJudul');
+            const errD = document.getElementById('errorDeskripsi');
+            const inputJ = document.getElementById('inputJudul');
+            const inputD = document.getElementById('inputDeskripsi');
+            errJ.classList.add('hidden');
+            errD.classList.add('hidden');
+            inputJ.style.borderColor = '#e4e2db';
+            inputD.style.borderColor = '#e4e2db';
+        }
+
+        function validateForm() {
+            clearValidationErrors();
+            const mode = getSelectedMode();
+            const inputJ = document.getElementById('inputJudul');
+            const inputD = document.getElementById('inputDeskripsi');
+            const errJ = document.getElementById('errorJudul');
+            const errD = document.getElementById('errorDeskripsi');
+            let valid = true;
+
+            if ((mode === 'judul' || mode === 'kombinasi') && !inputJ.value.trim()) {
+                errJ.classList.remove('hidden');
+                inputJ.style.borderColor = '#dc2626';
+                inputJ.style.boxShadow = '0 0 0 3px rgba(220,38,38,0.1)';
+                valid = false;
+            }
+            if ((mode === 'deskripsi' || mode === 'kombinasi') && !inputD.value.trim()) {
+                errD.classList.remove('hidden');
+                inputD.style.borderColor = '#dc2626';
+                inputD.style.boxShadow = '0 0 0 3px rgba(220,38,38,0.1)';
+                valid = false;
+            }
+
+            if (!valid) {
+                // Shake animation on first invalid field
+                const firstInvalid = !inputJ.value.trim() && !inputJ.disabled ? inputJ : inputD;
+                firstInvalid.style.animation = 'shake 0.4s ease';
+                setTimeout(() => firstInvalid.style.animation = '', 400);
+            }
+
+            return valid;
+        }
+
+        // Attach to form submit
+        document.getElementById('mainForm').addEventListener('submit', function (e) {
+            if (!validateForm()) {
+                e.preventDefault();
+            }
+        });
+
+        // Clear errors on typing
+        document.getElementById('inputJudul').addEventListener('input', function () {
+            if (this.value.trim()) {
+                document.getElementById('errorJudul').classList.add('hidden');
+                this.style.borderColor = '#e4e2db';
+                this.style.boxShadow = '';
+            }
+        });
+        document.getElementById('inputDeskripsi').addEventListener('input', function () {
+            if (this.value.trim()) {
+                document.getElementById('errorDeskripsi').classList.add('hidden');
+                this.style.borderColor = '#e4e2db';
+                this.style.boxShadow = '';
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                if (validateForm()) document.getElementById('mainForm').submit();
+            }
         });
 
         document.querySelectorAll('input[name="mode"]').forEach(radio => {
             radio.addEventListener('change', () => {
                 document.querySelectorAll('.mode-option > div').forEach(div => {
                     div.style.borderColor = '#e4e2db';
-                    div.style.background  = '#fafaf8';
+                    div.style.background = '#fafaf8';
                     div.querySelectorAll('svg').forEach(s => s.style.color = '#9ca3af');
                     div.querySelectorAll('span').forEach(s => s.style.color = '#6b7280');
                 });
                 const sel = radio.nextElementSibling;
                 sel.style.borderColor = '#2563eb';
-                sel.style.background  = '#eff6ff';
+                sel.style.background = '#eff6ff';
                 sel.querySelectorAll('svg').forEach(s => s.style.color = '#2563eb');
                 sel.querySelectorAll('span').forEach(s => s.style.color = '#1d4ed8');
+                clearValidationErrors();
             });
         });
 
         document.querySelector('input[name="mode"]:checked').dispatchEvent(new Event('change'));
 
         function updateInputState(mode) {
-            const j = document.querySelector('input[name="judul"]');
-            const d = document.querySelector('textarea[name="deskripsi"]');
+            const j = document.getElementById('inputJudul');
+            const d = document.getElementById('inputDeskripsi');
 
             const disable = el => {
                 el.disabled = true;
@@ -429,9 +846,9 @@
                 el.style.cursor = 'text';
             };
 
-            if (mode === 'judul')          { enable(j); disable(d); }
+            if (mode === 'judul') { enable(j); disable(d); }
             else if (mode === 'deskripsi') { disable(j); enable(d); }
-            else                           { enable(j); enable(d); }
+            else { enable(j); enable(d); }
         }
 
         document.querySelectorAll('input[name="mode"]').forEach(r =>
@@ -442,11 +859,11 @@
         document.getElementById('resetBtn').addEventListener('click', () => {
             window.location.href = window.location.pathname;
         });
-        document.getElementById('resetBtn').addEventListener('mouseenter', function() {
+        document.getElementById('resetBtn').addEventListener('mouseenter', function () {
             this.style.borderColor = '#2563eb';
             this.style.color = '#2563eb';
         });
-        document.getElementById('resetBtn').addEventListener('mouseleave', function() {
+        document.getElementById('resetBtn').addEventListener('mouseleave', function () {
             this.style.borderColor = '#e4e2db';
             this.style.color = '#6b7280';
         });
@@ -460,7 +877,41 @@
                 setTimeout(() => toast.remove(), 500);
             }, 4000);
         }
+
+        // Modal Logic
+        function showModal(title, content) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalContent').innerHTML = content;
+            document.getElementById('textModal').classList.remove('hidden');
+            document.getElementById('textModal').classList.add('flex');
+            document.body.style.overflow = 'hidden'; // Prevent background scroll
+        }
+
+        function closeModal() {
+            document.getElementById('textModal').classList.add('hidden');
+            document.getElementById('textModal').classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        {% if results or error %}
+        window.addEventListener('load', function () {
+            setTimeout(() => {
+                document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+        {% endif %}
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+
+            // Fungsi ketika tombol hamburger diklik
+            btn.addEventListener('click', () => {
+                // toggle class 'hidden' dari Tailwind untuk memunculkan/menyembunyikan menu
+                menu.classList.toggle('hidden');
+            });
+        });
     </script>
 
 </body>
+
 </html>

@@ -120,4 +120,4 @@ def combine_text(judul, deskripsi):
 
     gabungan = judul_clean + " " + deskripsi_clean
 
-    return gabungan
+    return gabungan, judul_clean, deskripsi_clean

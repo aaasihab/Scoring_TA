@@ -13,6 +13,12 @@ HEADERS = [
     "Top 3 - Text", "Top 3 - Score", "Top 3 - Label",
     "Top 4 - Text", "Top 4 - Score", "Top 4 - Label",
     "Top 5 - Text", "Top 5 - Score", "Top 5 - Label",
+    "Query (Raw Judul)", "Query (Raw Deskripsi)",
+    "Top 1 - Judul", "Top 1 - Deskripsi",
+    "Top 2 - Judul", "Top 2 - Deskripsi",
+    "Top 3 - Judul", "Top 3 - Deskripsi",
+    "Top 4 - Judul", "Top 4 - Deskripsi",
+    "Top 5 - Judul", "Top 5 - Deskripsi",
 ]
 
 
@@ -46,6 +52,12 @@ def save_to_history(results):
     # Append Top 1-5 results
     for r in results["results"]:
         row.extend([r["text"], r["score"], r["label"]])
+
+    # Append new separated fields
+    row.append(results.get("raw_query_judul", ""))
+    row.append(results.get("raw_query_deskripsi", ""))
+    for r in results["results"]:
+        row.extend([r.get("text_judul", ""), r.get("text_deskripsi", "")])
 
     ws.append(row)
     wb.save(HISTORY_FILE)

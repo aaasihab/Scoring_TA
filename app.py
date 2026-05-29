@@ -15,16 +15,31 @@ def index():
 
     if request.method == "POST":
 
-        judul = request.form.get("judul")
-        deskripsi = request.form.get("deskripsi")
-        mode = request.form.get("mode")
+        judul = request.form.get("judul", "").strip()
+        deskripsi = request.form.get("deskripsi", "").strip()
+        mode = request.form.get("mode", "judul")
 
-        try:
-            results = search_similar(judul, deskripsi, mode)
-            save_to_history(results)
-            saved = True
-        except Exception as e:
-            error = str(e)
+        # ============================
+        # Validasi input kosong
+        # ============================
+        if mode == "judul" and not judul:
+            error = "Judul Tugas Akhir wajib diisi."
+        elif mode == "deskripsi" and not deskripsi:
+            error = "Deskripsi Penelitian wajib diisi."
+        elif mode == "kombinasi" and (not judul or not deskripsi):
+            missing = []
+            if not judul:
+                missing.append("Judul")
+            if not deskripsi:
+                missing.append("Deskripsi")
+            error = f"{' dan '.join(missing)} wajib diisi untuk mode Kombinasi."
+        else:
+            try:
+                results = search_similar(judul, deskripsi, mode)
+                save_to_history(results)
+                saved = True
+            except Exception as e:
+                error = str(e)
 
     return render_template(
         "index.html",
