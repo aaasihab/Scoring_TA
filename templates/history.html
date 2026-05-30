@@ -167,14 +167,25 @@
             }
 
             /* Detail Row Styling on Mobile */
+            #historyTable tr.expandable.open {
+                margin-bottom: 0;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+                border-bottom: 1px dashed #e8e5de;
+            }
+
             .detail-row.active {
                 display: block !important;
+                margin-bottom: 1.5rem;
             }
 
             .detail-row td {
                 padding: 1rem;
                 display: block;
-                border: none;
+                border: 1px solid #e8e5de;
+                border-top: none;
+                background: #f9fafb; /* Latar abu-abu untuk pembeda */
+                border-radius: 0 0 0.75rem 0.75rem;
             }
 
             .detail-row td::before {
@@ -219,9 +230,11 @@
 
             .detail-row tr.border-t {
                 margin-bottom: 0.75rem;
-                border: 1px solid #eeece6;
+                border: 1px solid #e5e7eb;
+                border-left: 4px solid #3b82f6; /* Aksen kiri biru untuk membedakan */
                 border-radius: 0.5rem;
                 background: #ffffff;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.02);
             }
 
             .detail-row tr.border-t td {
@@ -350,7 +363,7 @@
                     Beranda
                 </a>
                 <a href="/history"
-                    class="flex items-center gap-2 p-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
+                    class="flex items-center gap-2 p-2 text-sm bg-blue-50 text-blue-600 font-semibold rounded-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 8v4l3 3" />
