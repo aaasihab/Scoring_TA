@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, request, send_file, redirect, url_for
 from engine.retrieval import search_similar
-from utils.history import save_to_history, load_history
+from engine.history import save_to_history, load_history
 
 app = Flask(__name__)
 

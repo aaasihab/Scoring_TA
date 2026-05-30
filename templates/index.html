@@ -201,7 +201,8 @@
             <a href="/" class="flex items-center gap-2.5" style="text-decoration:none;">
                 <img src="{{ url_for('static', filename='unuja.png') }}" alt="Logo"
                     class="h-8 w-8 rounded-lg object-contain">
-                <span class="text-sm font-semibold tracking-tight" style="color:#111827;">Sistem Penilaian TA</span>
+                <span class="text-sm font-semibold tracking-tight" style="color:#111827;">Sistem Penilaian Tugas
+                    Akhir</span>
             </a>
 
             <nav class="hidden md:flex items-center gap-1">
@@ -270,7 +271,7 @@
             </div>
             <div>
                 <h1 class="text-xl font-semibold tracking-tight" style="color:#111827;">
-                    Sistem Penilaian Judul Tugas Akhir
+                    Sistem Penilaian Judul Tugas Akhir Menggunakan Indobert
                 </h1>
             </div>
         </div>
@@ -436,59 +437,85 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                                 fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="M12 16v-4"/>
-                                <path d="M12 8h.01"/>
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M12 16v-4" />
+                                <path d="M12 8h.01" />
                             </svg>
                         </div>
                         <div>
                             <p class="text-sm font-semibold leading-none" style="color:#111827;">Keterangan Label</p>
-                            <p class="text-xs mt-1" style="color:#9ca3af;">Panduan warna dan arti dari skor penilaian</p>
+                            <p class="text-xs mt-1" style="color:#9ca3af;">Panduan warna dan arti dari skor penilaian
+                            </p>
                         </div>
                     </div>
-                    <svg class="w-5 h-5 transition-transform duration-200 group-open:rotate-180" style="color:#9ca3af;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-5 h-5 transition-transform duration-200 group-open:rotate-180" style="color:#9ca3af;"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </summary>
                 <div class="px-6 pb-6 cursor-default border-t pt-4" style="border-color:#eeece6; background:#fafaf8;">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <h4 class="text-xs font-semibold uppercase tracking-widest mb-3" style="color:#6b7280;">Label Kemiripan</h4>
+                            <h4 class="text-xs font-semibold uppercase tracking-widest mb-3" style="color:#6b7280;">
+                                Label Kemiripan</h4>
                             <div class="flex flex-col gap-2">
                                 <div class="flex items-center gap-3">
-                                    <span class="inline-block text-[10px] font-semibold tracking-wide px-2 py-0.5 rounded w-24 text-center" style="background:#fef2f2; border:1px solid #fca5a5; color:#b91c1c;">Sangat Mirip</span>
+                                    <span
+                                        class="inline-block text-[10px] font-semibold tracking-wide px-2 py-0.5 rounded w-24 text-center"
+                                        style="background:#fef2f2; border:1px solid #fca5a5; color:#b91c1c;">Sangat
+                                        Mirip</span>
                                     <p class="text-xs" style="color:#4b5563;">Skor ≥ 0.80 (Sangat mirip)</p>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <span class="inline-block text-[10px] font-semibold tracking-wide px-2 py-0.5 rounded w-24 text-center" style="background:#fffbeb; border:1px solid #fcd34d; color:#b45309;">Mirip</span>
+                                    <span
+                                        class="inline-block text-[10px] font-semibold tracking-wide px-2 py-0.5 rounded w-24 text-center"
+                                        style="background:#fffbeb; border:1px solid #fcd34d; color:#b45309;">Mirip</span>
                                     <p class="text-xs" style="color:#4b5563;">Skor 0.60 - 0.79 (Cukup mirip)</p>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <span class="inline-block text-[10px] font-semibold tracking-wide px-2 py-0.5 rounded w-24 text-center" style="background:#f0fdf4; border:1px solid #86efac; color:#15803d;">Tidak Mirip</span>
+                                    <span
+                                        class="inline-block text-[10px] font-semibold tracking-wide px-2 py-0.5 rounded w-24 text-center"
+                                        style="background:#f0fdf4; border:1px solid #86efac; color:#15803d;">Tidak
+                                        Mirip</span>
                                     <p class="text-xs" style="color:#4b5563;">Skor &lt; 0.60 (Berbeda/Unik)</p>
                                 </div>
                             </div>
                         </div>
                         <div>
                             <div class="mb-3">
-                                <h4 class="text-xs font-semibold uppercase tracking-widest mb-1" style="color:#6b7280;">Label Keunikan</h4>
-                                <p class="text-[10px] leading-relaxed" style="color:#9ca3af;">*Nilai keunikan dihitung berbanding terbalik dari nilai kemiripan tertinggi (Top 1).</p>
+                                <h4 class="text-xs font-semibold uppercase tracking-widest mb-1" style="color:#6b7280;">
+                                    Label Keunikan</h4>
+                                <p class="text-[10px] leading-relaxed" style="color:#9ca3af;">*Nilai keunikan dihitung
+                                    berbanding terbalik dari nilai kemiripan tertinggi (Top 1).</p>
                             </div>
                             <div class="flex flex-col gap-2">
                                 <div class="flex items-center gap-3">
-                                    <span class="inline-block text-[10px] font-semibold tracking-wide px-2 py-0.5 rounded w-24 text-center" style="background:#f0fdf4; border:1px solid #86efac; color:#15803d;">Sangat Menarik</span>
+                                    <span
+                                        class="inline-block text-[10px] font-semibold tracking-wide px-2 py-0.5 rounded w-24 text-center"
+                                        style="background:#f0fdf4; border:1px solid #86efac; color:#15803d;">Sangat
+                                        Menarik</span>
                                     <p class="text-xs" style="color:#4b5563;">Skor Unik ≥ 0.75</p>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <span class="inline-block text-[10px] font-semibold tracking-wide px-2 py-0.5 rounded w-24 text-center" style="background:#ecfdf5; border:1px solid #6ee7b7; color:#059669;">Cukup Menarik</span>
+                                    <span
+                                        class="inline-block text-[10px] font-semibold tracking-wide px-2 py-0.5 rounded w-24 text-center"
+                                        style="background:#ecfdf5; border:1px solid #6ee7b7; color:#059669;">Cukup
+                                        Menarik</span>
                                     <p class="text-xs" style="color:#4b5563;">Skor Unik 0.50 - 0.74</p>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <span class="inline-block text-[10px] font-semibold tracking-wide px-2 py-0.5 rounded w-24 text-center" style="background:#fffbeb; border:1px solid #fcd34d; color:#b45309;">Kurang Menarik</span>
+                                    <span
+                                        class="inline-block text-[10px] font-semibold tracking-wide px-2 py-0.5 rounded w-24 text-center"
+                                        style="background:#fffbeb; border:1px solid #fcd34d; color:#b45309;">Kurang
+                                        Menarik</span>
                                     <p class="text-xs" style="color:#4b5563;">Skor Unik 0.25 - 0.49</p>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <span class="inline-block text-[10px] font-semibold tracking-wide px-2 py-0.5 rounded w-24 text-center" style="background:#fef2f2; border:1px solid #fca5a5; color:#b91c1c;">Tidak Menarik</span>
+                                    <span
+                                        class="inline-block text-[10px] font-semibold tracking-wide px-2 py-0.5 rounded w-24 text-center"
+                                        style="background:#fef2f2; border:1px solid #fca5a5; color:#b91c1c;">Tidak
+                                        Menarik</span>
                                     <p class="text-xs" style="color:#4b5563;">Skor Unik &lt; 0.25</p>
                                 </div>
                             </div>
@@ -671,9 +698,9 @@
                                 </thead>
                                 <tbody>
                                     {% for r in results.results %}
-                                    {% set row_bg = '#eff6ff' if loop.index == 1 else '#ffffff' %}
-                                    {% set score_col = '#2563eb' if loop.index == 1 else '#9ca3af' %}
-                                    <tr class="border-t" style="border-color:#f0ede6; background:{{ row_bg }};">
+                                    {% set row_bg_class = 'bg-blue-50' if loop.index == 1 else 'bg-white' %}
+                                    {% set score_col_class = 'text-blue-600' if loop.index == 1 else 'text-gray-400' %}
+                                    <tr class="border-t {{ row_bg_class }}" style="border-color:#f0ede6;">
                                         <td class="px-4 py-3 font-mono text-xs"
                                             style="color:#9ca3af; vertical-align:top;">{{ loop.index }}
                                         </td>
@@ -714,8 +741,8 @@
                                             </div>
                                             {% endif %}
                                         </td>
-                                        <td class="px-4 py-3 text-right font-mono text-xs font-medium whitespace-nowrap"
-                                            style="color:{{ score_col }}; vertical-align:top;">{{ r.score }}</td>
+                                        <td class="px-4 py-3 text-right font-mono text-xs font-medium whitespace-nowrap {{ score_col_class }}"
+                                            style="vertical-align:top;">{{ r.score }}</td>
                                         <td class="px-4 py-3 text-center" style="vertical-align:top;">
                                             {% if r.label == "Sangat Mirip" %}
                                             <span
@@ -965,14 +992,19 @@
             document.getElementById('textModal').classList.remove('flex');
             document.body.style.overflow = '';
         }
+    </script>
 
-        {% if results or error %}
+    {% if results or error %}
+    <script>
         window.addEventListener('load', function () {
             setTimeout(() => {
                 document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
         });
-        {% endif %}
+    </script>
+    {% endif %}
+
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
             const btn = document.getElementById('mobile-menu-btn');
             const menu = document.getElementById('mobile-menu');

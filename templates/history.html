@@ -184,7 +184,8 @@
                 display: block;
                 border: 1px solid #e8e5de;
                 border-top: none;
-                background: #f9fafb; /* Latar abu-abu untuk pembeda */
+                background: #f9fafb;
+                /* Latar abu-abu untuk pembeda */
                 border-radius: 0 0 0.75rem 0.75rem;
             }
 
@@ -231,10 +232,11 @@
             .detail-row tr.border-t {
                 margin-bottom: 0.75rem;
                 border: 1px solid #e5e7eb;
-                border-left: 4px solid #3b82f6; /* Aksen kiri biru untuk membedakan */
+                border-left: 4px solid #3b82f6;
+                /* Aksen kiri biru untuk membedakan */
                 border-radius: 0.5rem;
                 background: #ffffff;
-                box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
             }
 
             .detail-row tr.border-t td {
@@ -635,8 +637,9 @@
                                                         </div>
                                                         {% endif %}
                                                     </td>
-                                                    <td class="px-3 py-2 text-right font-mono font-medium whitespace-nowrap"
-                                                        style="color:{% if i == 1 %}#2563eb{% else %}#9ca3af{% endif %};"
+                                                    {% set top_score_class = 'text-blue-600' if i == 1 else
+                                                    'text-gray-400' %}
+                                                    <td class="px-3 py-2 text-right font-mono font-medium whitespace-nowrap {{ top_score_class }}"
                                                         data-label="Skor">
                                                         {{ h[scr_key] }}
                                                     </td>
@@ -704,7 +707,7 @@
     <footer class="site-footer mt-auto">
         <div class="w-full px-4 lg:px-10 py-4 flex items-center justify-between">
             <p class="text-xs" style="color:#9ca3af;">
-                &copy; Sistem Penilaian Judul Tugas Akhir
+                &copy; Sistem Penilaian Judul Tugas Akhir Menggunakan Indobert
             </p>
         </div>
     </footer>
