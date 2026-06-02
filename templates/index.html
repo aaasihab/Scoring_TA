@@ -359,41 +359,44 @@
 
                     <div class="w-full h-px" style="background:#eeece6;"></div>
 
-                    <!-- JUDUL INPUT -->
-                    <div>
-                        <label class="block text-xs font-medium mb-2 uppercase tracking-widest"
-                            style="color:#9ca3af;">Judul Tugas Akhir</label>
-                        <input type="text" name="judul" id="inputJudul" placeholder="Masukkan judul Tugas Akhir…"
-                            class="styled-input w-full rounded-xl px-4 py-3 text-sm">
-                        <p id="errorJudul" class="text-xs mt-1.5 hidden" style="color:#dc2626;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="inline-block mr-1" style="vertical-align:-1px;">
-                                <circle cx="12" cy="12" r="10" />
-                                <line x1="12" y1="8" x2="12" y2="12" />
-                                <line x1="12" y1="16" x2="12.01" y2="16" />
-                            </svg>
-                            Judul Tugas Akhir wajib diisi
-                        </p>
-                    </div>
+                    <!-- FORM INPUTS CONTAINER -->
+                    <div id="inputs-container" class="flex flex-col">
+                        <!-- JUDUL INPUT -->
+                        <div id="wrapper-judul">
+                            <label class="block text-xs font-medium mb-2 uppercase tracking-widest"
+                                style="color:#9ca3af;">Judul Tugas Akhir</label>
+                            <input type="text" name="judul" id="inputJudul" placeholder="Masukkan judul Tugas Akhir…"
+                                class="styled-input w-full rounded-xl px-4 py-3 text-sm">
+                            <p id="errorJudul" class="text-xs mt-1.5 hidden" style="color:#dc2626;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="inline-block mr-1" style="vertical-align:-1px;">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <line x1="12" y1="8" x2="12" y2="12" />
+                                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                                </svg>
+                                Judul Tugas Akhir wajib diisi
+                            </p>
+                        </div>
 
-                    <!-- DESKRIPSI INPUT -->
-                    <div>
-                        <label class="block text-xs font-medium mb-2 uppercase tracking-widest"
-                            style="color:#9ca3af;">Deskripsi Penelitian</label>
-                        <textarea name="deskripsi" id="inputDeskripsi" rows="4"
-                            placeholder="Masukkan deskripsi penelitian…"
-                            class="styled-input w-full rounded-xl px-4 py-3 text-sm"></textarea>
-                        <p id="errorDeskripsi" class="text-xs mt-1.5 hidden" style="color:#dc2626;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="inline-block mr-1" style="vertical-align:-1px;">
-                                <circle cx="12" cy="12" r="10" />
-                                <line x1="12" y1="8" x2="12" y2="12" />
-                                <line x1="12" y1="16" x2="12.01" y2="16" />
-                            </svg>
-                            Deskripsi Penelitian wajib diisi
-                        </p>
+                        <!-- DESKRIPSI INPUT -->
+                        <div id="wrapper-deskripsi">
+                            <label class="block text-xs font-medium mb-2 uppercase tracking-widest"
+                                style="color:#9ca3af;">Deskripsi Penelitian</label>
+                            <textarea name="deskripsi" id="inputDeskripsi" rows="4"
+                                placeholder="Masukkan deskripsi penelitian…"
+                                class="styled-input w-full rounded-xl px-4 py-3 text-sm"></textarea>
+                            <p id="errorDeskripsi" class="text-xs mt-1.5 hidden" style="color:#dc2626;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="inline-block mr-1" style="vertical-align:-1px;">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <line x1="12" y1="8" x2="12" y2="12" />
+                                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                                </svg>
+                                Deskripsi Penelitian wajib diisi
+                            </p>
+                        </div>
                     </div>
 
                     <!-- BUTTONS -->
@@ -471,7 +474,7 @@
                                     <span
                                         class="inline-block text-[10px] font-semibold tracking-wide px-2 py-0.5 rounded w-24 text-center"
                                         style="background:#fffbeb; border:1px solid #fcd34d; color:#b45309;">Mirip</span>
-                                    <p class="text-xs" style="color:#4b5563;">Skor 0.60 - 0.79 (Cukup mirip)</p>
+                                    <p class="text-xs" style="color:#6b7280;">Skor 0.60 - 0.79 (Cukup mirip)</p>
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <span
@@ -545,7 +548,7 @@
                         </div>
                         <div>
                             <p class="text-sm font-semibold leading-none" style="color:#111827;">Hasil</p>
-                            <p class="text-xs mt-1" style="color:#9ca3af;">Skor kemiripan dan kebaruan penelitian</p>
+                            <p class="text-xs mt-1" style="color:#9ca3af;">Skor kemiripan dan keunikan penelitian</p>
                         </div>
                     </div>
                     <span class="text-xs px-3 py-1 rounded-full font-medium font-mono"
@@ -838,67 +841,67 @@
             return checked ? checked.value : 'judul';
         }
 
+        let nodeJudul = document.getElementById('wrapper-judul');
+        let nodeDeskripsi = document.getElementById('wrapper-deskripsi');
+
         function clearValidationErrors() {
-            const errJ = document.getElementById('errorJudul');
-            const errD = document.getElementById('errorDeskripsi');
-            const inputJ = document.getElementById('inputJudul');
-            const inputD = document.getElementById('inputDeskripsi');
-            errJ.classList.add('hidden');
-            errD.classList.add('hidden');
-            inputJ.style.borderColor = '#e4e2db';
-            inputD.style.borderColor = '#e4e2db';
+            const errJ = nodeJudul.querySelector('#errorJudul');
+            const errD = nodeDeskripsi.querySelector('#errorDeskripsi');
+            const inputJ = nodeJudul.querySelector('#inputJudul');
+            const inputD = nodeDeskripsi.querySelector('#inputDeskripsi');
+            if (errJ) errJ.classList.add('hidden');
+            if (errD) errD.classList.add('hidden');
+            if (inputJ) inputJ.style.borderColor = '#e4e2db';
+            if (inputD) inputD.style.borderColor = '#e4e2db';
         }
 
         function validateForm() {
             clearValidationErrors();
             const mode = getSelectedMode();
-            const inputJ = document.getElementById('inputJudul');
-            const inputD = document.getElementById('inputDeskripsi');
-            const errJ = document.getElementById('errorJudul');
-            const errD = document.getElementById('errorDeskripsi');
+            const inputJ = nodeJudul.querySelector('#inputJudul');
+            const inputD = nodeDeskripsi.querySelector('#inputDeskripsi');
+            const errJ = nodeJudul.querySelector('#errorJudul');
+            const errD = nodeDeskripsi.querySelector('#errorDeskripsi');
             let valid = true;
 
-            if ((mode === 'judul' || mode === 'kombinasi') && !inputJ.value.trim()) {
-                errJ.classList.remove('hidden');
+            if ((mode === 'judul' || mode === 'kombinasi') && inputJ && !inputJ.value.trim()) {
+                if (errJ) errJ.classList.remove('hidden');
                 inputJ.style.borderColor = '#dc2626';
                 inputJ.style.boxShadow = '0 0 0 3px rgba(220,38,38,0.1)';
                 valid = false;
             }
-            if ((mode === 'deskripsi' || mode === 'kombinasi') && !inputD.value.trim()) {
-                errD.classList.remove('hidden');
+            if ((mode === 'deskripsi' || mode === 'kombinasi') && inputD && !inputD.value.trim()) {
+                if (errD) errD.classList.remove('hidden');
                 inputD.style.borderColor = '#dc2626';
                 inputD.style.boxShadow = '0 0 0 3px rgba(220,38,38,0.1)';
                 valid = false;
             }
 
             if (!valid) {
-                // Shake animation on first invalid field
-                const firstInvalid = !inputJ.value.trim() && !inputJ.disabled ? inputJ : inputD;
-                firstInvalid.style.animation = 'shake 0.4s ease';
-                setTimeout(() => firstInvalid.style.animation = '', 400);
+                const firstInvalid = ((mode === 'judul' || mode === 'kombinasi') && !inputJ.value.trim()) ? inputJ : inputD;
+                if (firstInvalid) {
+                    firstInvalid.style.animation = 'shake 0.4s ease';
+                    setTimeout(() => firstInvalid.style.animation = '', 400);
+                }
             }
 
             return valid;
         }
 
-        // Attach to form submit
         document.getElementById('mainForm').addEventListener('submit', function (e) {
-            if (!validateForm()) {
-                e.preventDefault();
-            }
+            if (!validateForm()) e.preventDefault();
         });
 
-        // Clear errors on typing
-        document.getElementById('inputJudul').addEventListener('input', function () {
+        nodeJudul.querySelector('#inputJudul').addEventListener('input', function () {
             if (this.value.trim()) {
-                document.getElementById('errorJudul').classList.add('hidden');
+                nodeJudul.querySelector('#errorJudul').classList.add('hidden');
                 this.style.borderColor = '#e4e2db';
                 this.style.boxShadow = '';
             }
         });
-        document.getElementById('inputDeskripsi').addEventListener('input', function () {
+        nodeDeskripsi.querySelector('#inputDeskripsi').addEventListener('input', function () {
             if (this.value.trim()) {
-                document.getElementById('errorDeskripsi').classList.add('hidden');
+                nodeDeskripsi.querySelector('#errorDeskripsi').classList.add('hidden');
                 this.style.borderColor = '#e4e2db';
                 this.style.boxShadow = '';
             }
@@ -929,26 +932,122 @@
 
         document.querySelector('input[name="mode"]:checked').dispatchEvent(new Event('change'));
 
-        function updateInputState(mode) {
-            const j = document.getElementById('inputJudul');
-            const d = document.getElementById('inputDeskripsi');
+        let isAnimating = false;
+        let pendingMode = null;
 
-            const disable = el => {
-                el.disabled = true;
-                el.style.opacity = '0.4';
-                el.style.cursor = 'not-allowed';
-                el.style.borderColor = '#e4e2db';
-                el.value = '';
-            };
-            const enable = el => {
-                el.disabled = false;
+        function animateHide(el) {
+            return new Promise(resolve => {
+                if (!el || !el.parentElement) return resolve();
+                
+                if (el.style.maxHeight === 'none' || !el.style.maxHeight) {
+                    el.style.maxHeight = el.scrollHeight + 'px';
+                }
+                
+                el.style.overflow = 'hidden';
+                el.style.transition = 'max-height 400ms ease, opacity 300ms ease, margin-bottom 400ms ease';
+                
+                void el.offsetHeight;
+                
+                el.style.maxHeight = '0px';
+                el.style.opacity = '0';
+                el.style.marginBottom = '0px';
+                
+                setTimeout(() => {
+                    if (el.parentElement) el.remove();
+                    resolve();
+                }, 400);
+            });
+        }
+
+        function animateShow(el, container, insertBeforeNode, targetMb) {
+            return new Promise(resolve => {
+                if (!el) return resolve();
+
+                el.style.transition = 'max-height 400ms ease, opacity 400ms ease, margin-bottom 400ms ease';
+
+                if (el.parentElement) {
+                    el.style.marginBottom = targetMb + 'px';
+                    el.style.opacity = '1';
+                    
+                    if (el.style.maxHeight !== 'none') {
+                        el.style.maxHeight = el.scrollHeight + targetMb + 100 + 'px';
+                        setTimeout(() => { 
+                            el.style.maxHeight = 'none'; 
+                            el.style.overflow = 'visible'; 
+                            resolve(); 
+                        }, 400);
+                    } else {
+                        setTimeout(resolve, 400);
+                    }
+                    return;
+                }
+                
+                el.style.overflow = 'hidden';
+                el.style.maxHeight = '0px';
+                el.style.opacity = '0';
+                el.style.marginBottom = '0px';
+                
+                if (insertBeforeNode && insertBeforeNode.parentElement === container) {
+                    container.insertBefore(el, insertBeforeNode);
+                } else {
+                    container.appendChild(el);
+                }
+                
+                void el.offsetHeight;
+                
+                el.style.maxHeight = el.scrollHeight + 'px';
                 el.style.opacity = '1';
-                el.style.cursor = 'text';
-            };
+                el.style.marginBottom = targetMb + 'px';
+                
+                setTimeout(() => {
+                    el.style.overflow = 'visible';
+                    el.style.maxHeight = 'none'; 
+                    resolve();
+                }, 400);
+            });
+        }
 
-            if (mode === 'judul') { enable(j); disable(d); }
-            else if (mode === 'deskripsi') { disable(j); enable(d); }
-            else { enable(j); enable(d); }
+        async function updateInputState(mode) {
+            if (isAnimating) {
+                pendingMode = mode;
+                return;
+            }
+            
+            const container = document.getElementById('inputs-container');
+            if (!container || !nodeJudul || !nodeDeskripsi) return;
+
+            isAnimating = true;
+
+            if (mode === 'deskripsi') {
+                const j = nodeJudul.querySelector('#inputJudul');
+                if (j) j.value = '';
+            }
+            if (mode === 'judul') {
+                const d = nodeDeskripsi.querySelector('#inputDeskripsi');
+                if (d) d.value = '';
+            }
+
+            const promises = [];
+
+            if (mode === 'judul') {
+                if (nodeDeskripsi.parentElement) promises.push(animateHide(nodeDeskripsi));
+                promises.push(animateShow(nodeJudul, container, null, 0)); 
+            } else if (mode === 'deskripsi') {
+                if (nodeJudul.parentElement) promises.push(animateHide(nodeJudul));
+                promises.push(animateShow(nodeDeskripsi, container, null, 0));
+            } else { // kombinasi
+                promises.push(animateShow(nodeDeskripsi, container, null, 0));
+                promises.push(animateShow(nodeJudul, container, nodeDeskripsi, 24));
+            }
+
+            await Promise.all(promises);
+
+            isAnimating = false;
+            if (pendingMode) {
+                const next = pendingMode;
+                pendingMode = null;
+                updateInputState(next);
+            }
         }
 
         document.querySelectorAll('input[name="mode"]').forEach(r =>
