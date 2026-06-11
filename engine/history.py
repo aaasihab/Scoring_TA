@@ -2,8 +2,11 @@ import os
 from datetime import datetime
 from openpyxl import Workbook, load_workbook
 
-
-HISTORY_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "dataset", "history.xlsx")
+HISTORY_FILE = os.path.join(
+    os.path.dirname(os.path.dirname(__file__)),
+    "dataset",
+    "history.xlsx"
+)
 
 HEADERS = [
     "No", "Timestamp", "Mode", "Query (Raw)", "Query (Preprocessed)",
@@ -13,7 +16,6 @@ HEADERS = [
     "Top 3 - Text", "Top 3 - Score", "Top 3 - Label",
     "Top 4 - Text", "Top 4 - Score", "Top 4 - Label",
     "Top 5 - Text", "Top 5 - Score", "Top 5 - Label",
-    "Query (Raw Judul)", "Query (Raw Deskripsi)",
     "Top 1 - Judul", "Top 1 - Deskripsi",
     "Top 2 - Judul", "Top 2 - Deskripsi",
     "Top 3 - Judul", "Top 3 - Deskripsi",
@@ -22,16 +24,12 @@ HEADERS = [
 ]
 
 
-# ======================================
-# Simpan Hasil ke History Excel
-# ======================================
-
 def save_to_history(results):
 
     if os.path.exists(HISTORY_FILE):
         wb = load_workbook(HISTORY_FILE)
         ws = wb.active
-        next_no = ws.max_row  # max_row includes header row
+        next_no = ws.max_row
     else:
         wb = Workbook()
         ws = wb.active
@@ -41,7 +39,7 @@ def save_to_history(results):
 
     row = [
         next_no,
-        datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        datetime.now(),
         results["mode"],
         results["raw_query"],
         results["query"],
@@ -49,23 +47,35 @@ def save_to_history(results):
         results["unique"]["label_max"],
     ]
 
-    # Append Top 1-5 results
+    # Top 1-5
     for r in results["results"]:
-        row.extend([r["text"], r["score"], r["label"]])
+        row.extend([
+            r["text"],
+            r["score"],
+            r["label"]
+        ])
 
-    # Append new separated fields
+    # Query Judul & Deskripsi
     row.append(results.get("raw_query_judul", ""))
     row.append(results.get("raw_query_deskripsi", ""))
-    for r in results["results"]:
-        row.extend([r.get("text_judul", ""), r.get("text_deskripsi", "")])
 
+    # Top 1-5 Judul & Deskripsi
+    for r in results["results"]:
+        row.extend([
+            r.get("text_judul", ""),
+            r.get("text_deskripsi", "")
+        ])
+
+    # Tambah data ke worksheet
     ws.append(row)
+
+    # Format kolom Timestamp (kolom B)
+    timestamp_cell = ws.cell(row=ws.max_row, column=2)
+    timestamp_cell.number_format = "dd/mm/yyyy hh:mm"
+
+    # Simpan file
     wb.save(HISTORY_FILE)
 
-
-# ======================================
-# Muat Semua Data History
-# ======================================
 
 def load_history():
 
@@ -80,7 +90,9 @@ def load_history():
 
     for row in ws.iter_rows(min_row=2, values_only=True):
         record = dict(zip(headers, row))
+        if isinstance(record.get("Timestamp"), datetime):
+            record["Timestamp"] = record["Timestamp"].strftime("%d/%m/%Y %H:%M")
         data.append(record)
 
-    data.reverse()  # Terbaru di atas
+    data.reverse()  # Data terbaru di atas
     return data

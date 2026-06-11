@@ -7,27 +7,15 @@ from engine.similarity import compute_similarity, get_top_k
 from engine.unique import calculate_unique
 from engine.preprocessing import preprocess_text
 
-
-# ======================================
 # Load Dataset
-# ======================================
-
 dataset = pd.read_excel("dataset/df_train.xlsx")
 
-
-# ======================================
 # Load Embeddings
-# ======================================
-
 embedding_judul = np.load("dataset/embeddings_title_train.npy")
 embedding_deskripsi = np.load("dataset/embeddings_description_train.npy")
 embedding_gabungan = np.load("dataset/embeddings_combined_train.npy")
 
-
-# ======================================
 # Search Similar
-# ======================================
-
 def search_similar(judul, deskripsi, mode):
 
     if mode == "judul":
@@ -54,7 +42,6 @@ def search_similar(judul, deskripsi, mode):
     else:
         raise ValueError("Mode tidak valid")
 
-
     # Encode query
     query_embedding = encode_text(query_text)
     query_embedding = query_embedding.reshape(1, -1)
@@ -68,11 +55,6 @@ def search_similar(judul, deskripsi, mode):
     results = []
 
     for idx, score in zip(top_idx, top_scores):
-
-        # ==============================
-        # Ambil teks sesuai mode
-        # ==============================
-
         if mode == "judul":
             text_result = dataset.iloc[idx]["judul_preprocessed"]
             raw_text_result = dataset.iloc[idx]["judul_ta"]
@@ -93,10 +75,7 @@ def search_similar(judul, deskripsi, mode):
             text_judul = dataset.iloc[idx]["judul_preprocessed"]
             text_deskripsi = dataset.iloc[idx]["deskripsi_preprocessed"]
 
-        # ==============================
         # Klasifikasi Skala
-        # ==============================
-
         score = round(float(score), 2)
         if score >= 0.8:
             label = "Sangat Mirip"
@@ -105,10 +84,7 @@ def search_similar(judul, deskripsi, mode):
         else:
             label = "Tidak Mirip"
 
-        # ==============================
         # Simpan hasil
-        # ==============================
-
         result_item = {
             "text": text_result,
             "score": score,

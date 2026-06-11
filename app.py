@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, request, send_file, redirect, url_for
-from engine.retrieval import search_similar
+from engine.retrieval import search_similar, dataset
 from engine.history import save_to_history, load_history
 
 app = Flask(__name__)
@@ -19,9 +19,7 @@ def index():
         deskripsi = request.form.get("deskripsi", "").strip()
         mode = request.form.get("mode", "judul")
 
-        # ============================
         # Validasi input kosong
-        # ============================
         if mode == "judul" and not judul:
             error = "Judul Tugas Akhir wajib diisi."
         elif mode == "deskripsi" and not deskripsi:
@@ -45,14 +43,34 @@ def index():
         "index.html",
         results=results,
         error=error,
-        saved=saved
+        saved=saved,
+        dataset_count=len(dataset)
     )
 
 
 @app.route("/history")
 def history():
     data = load_history()
-    return render_template("history.html", history=data)
+
+    # Pagination: 5 items per page
+    per_page = 5
+    total_items = len(data)
+    total_pages = max(1, (total_items + per_page - 1) // per_page)
+
+    page = request.args.get("page", 1, type=int)
+    page = max(1, min(page, total_pages))
+
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_data = data[start:end]
+
+    return render_template(
+        "history.html",
+        history=paginated_data,
+        page=page,
+        total_pages=total_pages,
+        total_items=total_items
+    )
 
 
 @app.route("/history/download")

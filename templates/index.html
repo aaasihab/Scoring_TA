@@ -201,7 +201,7 @@
             <a href="/" class="flex items-center gap-2.5" style="text-decoration:none;">
                 <img src="{{ url_for('static', filename='unuja.png') }}" alt="Logo"
                     class="h-8 w-8 rounded-lg object-contain">
-                <span class="text-sm font-semibold tracking-tight" style="color:#111827;">Sistem Penilaian Tugas
+                <span class="text-sm font-semibold tracking-tight" style="color:#111827;">Sistem Penilaian Judul Tugas
                     Akhir</span>
             </a>
 
@@ -271,7 +271,7 @@
             </div>
             <div>
                 <h1 class="text-xl font-semibold tracking-tight" style="color:#111827;">
-                    Sistem Penilaian Judul Tugas Akhir Menggunakan Indobert
+                    Sistem Penilaian Judul Tugas Akhir Berbasis Indobert
                 </h1>
             </div>
         </div>
@@ -523,6 +523,106 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </details>
+
+            <!-- =============================== -->
+            <!-- INFO PANEL (METODOLOGI)         -->
+            <!-- =============================== -->
+            <details class="rounded-2xl card group cursor-pointer overflow-hidden">
+                <summary class="flex items-center justify-between px-6 py-4 list-none outline-none">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl flex items-center justify-center"
+                            style="background:#eff6ff; border:1px solid #bfdbfe;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" y1="16" x2="12" y2="12" />
+                                <line x1="12" y1="8" x2="12.01" y2="8" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold leading-none" style="color:#111827;">Informasi Sistem &
+                                Metodologi</p>
+                            <p class="text-xs mt-1" style="color:#9ca3af;">Penjelasan sumber data dan perhitungan skor
+                            </p>
+                        </div>
+                    </div>
+                    <svg class="w-5 h-5 transition-transform duration-200 group-open:rotate-180" style="color:#9ca3af;"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </summary>
+                <div class="px-6 pb-6 cursor-default border-t pt-4" style="border-color:#eeece6; background:#fafaf8;">
+                    <div class="flex flex-col gap-5">
+
+                        <div class="flex gap-4">
+                            <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                                style="background:#f3f4f6;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="#4b5563" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M4 22h14a2 2 0 0 0 2-2V7.5L14.5 2H6a2 2 0 0 0-2 2v4" />
+                                    <polyline points="14 2 14 8 20 8" />
+                                    <path d="M2 15h10" />
+                                    <path d="m9 18 3-3-3-3" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-semibold" style="color:#374151;">Dataset & Ruang Pencarian</h4>
+                                <p class="text-xs mt-1.5 leading-relaxed" style="color:#6b7280;">
+                                    Sistem membandingkan input Anda dengan <strong>{{
+                                        "{:,}".format(dataset_count).replace(',', '.') }} data</strong> riwayat Tugas
+                                    Akhir yang telah terverifikasi di database.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                                style="background:#f3f4f6;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="#4b5563" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                                    <path d="M2 12h20" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-semibold" style="color:#374151;">Model Pendeteksi Kemiripan</h4>
+                                <p class="text-xs mt-1.5 leading-relaxed" style="color:#6b7280;">
+                                    Menggunakan metode <em>Text Embedding</em> dengan model <strong>IndoBERT berbasis
+                                        SimCSE</strong> yang kemudian kemiripan teksnya diukur menggunakan
+                                    metrik <em>Cosine Similarity</em> (skor 0 - 1).
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                                style="background:#f3f4f6;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="#4b5563" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-semibold" style="color:#374151;">Skor Keunikan</h4>
+                                <p class="text-xs mt-1.5 leading-relaxed" style="color:#6b7280;">
+                                    Dihitung berdasarkan skor kemiripan tertinggi yang ditemukan pada ruang pencarian.
+                                    Skor tertinggi tersebut di-skala (<em>Min-Max Scaling</em>) kemudian digunakan dalam
+                                    rumus: <code>1 - (Skor Skala Tertinggi)</code>. Semakin kecil kemiripan tertinggi
+                                    yang terdeteksi, maka judul Anda semakin unik.
+                                </p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </details>
@@ -938,20 +1038,20 @@
         function animateHide(el) {
             return new Promise(resolve => {
                 if (!el || !el.parentElement) return resolve();
-                
+
                 if (el.style.maxHeight === 'none' || !el.style.maxHeight) {
                     el.style.maxHeight = el.scrollHeight + 'px';
                 }
-                
+
                 el.style.overflow = 'hidden';
                 el.style.transition = 'max-height 400ms ease, opacity 300ms ease, margin-bottom 400ms ease';
-                
+
                 void el.offsetHeight;
-                
+
                 el.style.maxHeight = '0px';
                 el.style.opacity = '0';
                 el.style.marginBottom = '0px';
-                
+
                 setTimeout(() => {
                     if (el.parentElement) el.remove();
                     resolve();
@@ -968,40 +1068,40 @@
                 if (el.parentElement) {
                     el.style.marginBottom = targetMb + 'px';
                     el.style.opacity = '1';
-                    
+
                     if (el.style.maxHeight !== 'none') {
                         el.style.maxHeight = el.scrollHeight + targetMb + 100 + 'px';
-                        setTimeout(() => { 
-                            el.style.maxHeight = 'none'; 
-                            el.style.overflow = 'visible'; 
-                            resolve(); 
+                        setTimeout(() => {
+                            el.style.maxHeight = 'none';
+                            el.style.overflow = 'visible';
+                            resolve();
                         }, 400);
                     } else {
                         setTimeout(resolve, 400);
                     }
                     return;
                 }
-                
+
                 el.style.overflow = 'hidden';
                 el.style.maxHeight = '0px';
                 el.style.opacity = '0';
                 el.style.marginBottom = '0px';
-                
+
                 if (insertBeforeNode && insertBeforeNode.parentElement === container) {
                     container.insertBefore(el, insertBeforeNode);
                 } else {
                     container.appendChild(el);
                 }
-                
+
                 void el.offsetHeight;
-                
+
                 el.style.maxHeight = el.scrollHeight + 'px';
                 el.style.opacity = '1';
                 el.style.marginBottom = targetMb + 'px';
-                
+
                 setTimeout(() => {
                     el.style.overflow = 'visible';
-                    el.style.maxHeight = 'none'; 
+                    el.style.maxHeight = 'none';
                     resolve();
                 }, 400);
             });
@@ -1012,7 +1112,7 @@
                 pendingMode = mode;
                 return;
             }
-            
+
             const container = document.getElementById('inputs-container');
             if (!container || !nodeJudul || !nodeDeskripsi) return;
 
@@ -1031,7 +1131,7 @@
 
             if (mode === 'judul') {
                 if (nodeDeskripsi.parentElement) promises.push(animateHide(nodeDeskripsi));
-                promises.push(animateShow(nodeJudul, container, null, 0)); 
+                promises.push(animateShow(nodeJudul, container, null, 0));
             } else if (mode === 'deskripsi') {
                 if (nodeJudul.parentElement) promises.push(animateHide(nodeJudul));
                 promises.push(animateShow(nodeDeskripsi, container, null, 0));

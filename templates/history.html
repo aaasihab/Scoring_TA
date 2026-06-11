@@ -317,7 +317,8 @@
             <a href="/" class="flex items-center gap-2.5" style="text-decoration:none;">
                 <img src="{{ url_for('static', filename='unuja.png') }}" alt="Logo"
                     class="h-8 w-8 rounded-lg object-contain">
-                <span class="text-sm font-semibold tracking-tight" style="color:#111827;">Sistem Penilaian TA</span>
+                <span class="text-sm font-semibold tracking-tight" style="color:#111827;">Sistem Penilaian Judul Tugas
+                    Akhir</span>
             </a>
 
             <nav class="hidden md:flex items-center gap-1">
@@ -409,7 +410,7 @@
                     <div>
                         <p class="text-sm font-semibold leading-none" style="color:#111827;">Data History</p>
                         <p class="text-xs mt-1" style="color:#9ca3af;">
-                            {% if history %}{{ history|length }} pengujian tersimpan{% else %}Belum ada data{% endif %}
+                            {% if history %}{{ total_items }} pengujian tersimpan{% else %}Belum ada data{% endif %}
                         </p>
                     </div>
                 </div>
@@ -485,7 +486,7 @@
                             <tr class="border-t expandable" style="border-color:#f0ede6;"
                                 onclick="toggleDetail({{ loop.index }}, this)">
                                 <td class="px-4 py-3 font-mono text-xs" style="color:#9ca3af;" data-label="No">{{
-                                    h["No"]
+                                    (page - 1) * 5 + loop.index
                                     }}</td>
                                 <td class="px-4 py-3 text-xs font-mono whitespace-nowrap" style="color:#6b7280;"
                                     data-label="Waktu">{{
@@ -674,6 +675,104 @@
                         </tbody>
                     </table>
                 </div>
+
+                <!-- PAGINATION -->
+                {% if total_pages > 1 %}
+                <div class="mt-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <!-- Info Text -->
+                    <p class="text-xs" style="color:#9ca3af;">
+                        Halaman <span class="font-semibold" style="color:#2563eb;">{{ page }}</span> dari <span class="font-semibold" style="color:#374151;">{{ total_pages }}</span>
+                        &middot; Total <span class="font-semibold" style="color:#374151;">{{ total_items }}</span> data
+                    </p>
+
+                    <!-- Pagination Buttons -->
+                    <nav class="flex items-center gap-1">
+                        <!-- Previous Button -->
+                        {% if page > 1 %}
+                        <a href="{{ url_for('history', page=page-1) }}"
+                            class="flex items-center justify-center w-9 h-9 rounded-lg text-xs font-medium transition-all"
+                            style="background:#f8f7f4; border:1px solid #e4e2db; color:#6b7280; text-decoration:none;"
+                            onmouseenter="this.style.borderColor='#2563eb'; this.style.color='#2563eb'; this.style.background='#eff6ff';"
+                            onmouseleave="this.style.borderColor='#e4e2db'; this.style.color='#6b7280'; this.style.background='#f8f7f4';">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        </a>
+                        {% else %}
+                        <span class="flex items-center justify-center w-9 h-9 rounded-lg text-xs"
+                            style="background:#f8f7f4; border:1px solid #eeece6; color:#d1cec7; cursor:not-allowed;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        </span>
+                        {% endif %}
+
+                        <!-- Page Numbers -->
+                        {% set start_page = [1, page - 2] | max %}
+                        {% set end_page = [total_pages, start_page + 4] | min %}
+                        {% set start_page = [1, end_page - 4] | max %}
+
+                        {% if start_page > 1 %}
+                        <a href="{{ url_for('history', page=1) }}"
+                            class="flex items-center justify-center w-9 h-9 rounded-lg text-xs font-medium transition-all"
+                            style="background:#f8f7f4; border:1px solid #e4e2db; color:#6b7280; text-decoration:none;"
+                            onmouseenter="this.style.borderColor='#2563eb'; this.style.color='#2563eb'; this.style.background='#eff6ff';"
+                            onmouseleave="this.style.borderColor='#e4e2db'; this.style.color='#6b7280'; this.style.background='#f8f7f4';">1</a>
+                        {% if start_page > 2 %}
+                        <span class="flex items-center justify-center w-6 h-9 text-xs" style="color:#9ca3af;">…</span>
+                        {% endif %}
+                        {% endif %}
+
+                        {% for p in range(start_page, end_page + 1) %}
+                        {% if p == page %}
+                        <span class="flex items-center justify-center w-9 h-9 rounded-lg text-xs font-bold text-white"
+                            style="background:linear-gradient(135deg,#2563eb,#1d4ed8); box-shadow:0 2px 8px rgba(37,99,235,0.3);">{{ p }}</span>
+                        {% else %}
+                        <a href="{{ url_for('history', page=p) }}"
+                            class="flex items-center justify-center w-9 h-9 rounded-lg text-xs font-medium transition-all"
+                            style="background:#f8f7f4; border:1px solid #e4e2db; color:#6b7280; text-decoration:none;"
+                            onmouseenter="this.style.borderColor='#2563eb'; this.style.color='#2563eb'; this.style.background='#eff6ff';"
+                            onmouseleave="this.style.borderColor='#e4e2db'; this.style.color='#6b7280'; this.style.background='#f8f7f4';">{{ p }}</a>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% if end_page < total_pages %}
+                        {% if end_page < total_pages - 1 %}
+                        <span class="flex items-center justify-center w-6 h-9 text-xs" style="color:#9ca3af;">…</span>
+                        {% endif %}
+                        <a href="{{ url_for('history', page=total_pages) }}"
+                            class="flex items-center justify-center w-9 h-9 rounded-lg text-xs font-medium transition-all"
+                            style="background:#f8f7f4; border:1px solid #e4e2db; color:#6b7280; text-decoration:none;"
+                            onmouseenter="this.style.borderColor='#2563eb'; this.style.color='#2563eb'; this.style.background='#eff6ff';"
+                            onmouseleave="this.style.borderColor='#e4e2db'; this.style.color='#6b7280'; this.style.background='#f8f7f4';">{{ total_pages }}</a>
+                        {% endif %}
+
+                        <!-- Next Button -->
+                        {% if page < total_pages %}
+                        <a href="{{ url_for('history', page=page+1) }}"
+                            class="flex items-center justify-center w-9 h-9 rounded-lg text-xs font-medium transition-all"
+                            style="background:#f8f7f4; border:1px solid #e4e2db; color:#6b7280; text-decoration:none;"
+                            onmouseenter="this.style.borderColor='#2563eb'; this.style.color='#2563eb'; this.style.background='#eff6ff';"
+                            onmouseleave="this.style.borderColor='#e4e2db'; this.style.color='#6b7280'; this.style.background='#f8f7f4';">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </a>
+                        {% else %}
+                        <span class="flex items-center justify-center w-9 h-9 rounded-lg text-xs"
+                            style="background:#f8f7f4; border:1px solid #eeece6; color:#d1cec7; cursor:not-allowed;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </span>
+                        {% endif %}
+                    </nav>
+                </div>
+                {% endif %}
 
                 {% else %}
 
