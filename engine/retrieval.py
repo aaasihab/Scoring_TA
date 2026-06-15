@@ -57,20 +57,14 @@ def search_similar(judul, deskripsi, mode):
     for idx, score in zip(top_idx, top_scores):
         if mode == "judul":
             text_result = dataset.iloc[idx]["judul_preprocessed"]
-            raw_text_result = dataset.iloc[idx]["judul_ta"]
 
         elif mode == "deskripsi":
             text_result = dataset.iloc[idx]["deskripsi_preprocessed"]
-            raw_text_result = dataset.iloc[idx]["deskripsi"]
 
         else:
             text_result = (
                 dataset.iloc[idx]["judul_preprocessed"] + " " +
                 dataset.iloc[idx]["deskripsi_preprocessed"]
-            )
-            raw_text_result = (
-                dataset.iloc[idx]["judul_ta"] + " " +
-                dataset.iloc[idx]["deskripsi"]
             )
             text_judul = dataset.iloc[idx]["judul_preprocessed"]
             text_deskripsi = dataset.iloc[idx]["deskripsi_preprocessed"]

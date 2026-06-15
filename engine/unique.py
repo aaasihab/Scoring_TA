@@ -4,13 +4,13 @@ import numpy as np
 def classify_unique(score):
 
     if score >= 0.75:
-        return "Sangat Menarik"
+        return "Sangat Unik"
     elif score >= 0.5:
-        return "Cukup Menarik"
+        return "Cukup Unik"
     elif score >= 0.25:
-        return "Kurang Menarik"
+        return "Kurang Unik"
     else:
-        return "Tidak Menarik"
+        return "Tidak Unik"
 
 # Hitung Unique Score
 def calculate_unique(top_scores, min_sim=0.6, max_sim=1.0):
