@@ -21,9 +21,5 @@ instance/
 .DS_Store
 Thumbs.db
 
-# model
-model/
-*.safetensors
-
 terbaru/
 lama/
